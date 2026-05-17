@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudioPoint — Your Studio. Your App. One Flat Fee.</title>
+  <meta name="description" content="StudioPoint gives boutique fitness studios a fully branded mobile booking app — no hidden fees, no per-transaction charges, no surprises." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #1A1A1A; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(26,26,26,0.97); backdrop-filter: blur(8px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 40px;
+    }
+    .nav-logo { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-logo span { color: #8B7355; }
+    .nav-cta {
+      background: #8B7355; color: #fff; border: none; border-radius: 8px;
+      padding: 10px 22px; font-size: 14px; font-weight: 600; cursor: pointer;
+      text-decoration: none;
+    }
+    .nav-cta:hover { background: #7a6248; }
+
+    /* HERO */
+    .hero {
+      background: #1A1A1A; color: #fff;
+      padding: 160px 40px 100px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block; background: rgba(139,115,85,0.2); color: #C4A882;
+      border: 1px solid rgba(139,115,85,0.4); border-radius: 20px;
+      padding: 6px 16px; font-size: 13px; font-weight: 600; margin-bottom: 28px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 68px); font-weight: 800;
+      line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 24px;
+    }
+    .hero h1 span { color: #8B7355; }
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px); color: #aaa;
+      max-width: 600px; margin: 0 auto 40px; line-height: 1.6;
+    }
+    .hero-cta {
+      display: inline-block; background: #8B7355; color: #fff;
+      border-radius: 12px; padding: 18px 40px; font-size: 17px; font-weight: 700;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .hero-cta:hover { background: #7a6248; }
+    .hero-sub {
+      display: block; margin-top: 14px; font-size: 13px; color: #666;
+    }
+
+    /* SECTIONS */
+    section { padding: 80px 40px; }
+    .section-inner { max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+      color: #8B7355; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+      letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 17px; color: #555; line-height: 1.7; max-width: 620px;
+    }
+
+    /* PROBLEM */
+    .problem { background: #F9F6F2; }
+    .problem .section-title { max-width: 700px; }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px; margin-top: 48px;
+    }
+    .feature-card {
+      background: #F9F6F2; border-radius: 16px; padding: 24px;
+    }
+    .feature-icon { font-size: 28px; margin-bottom: 12px; }
+    .feature-title { font-size: 16px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
+    .feature-desc { font-size: 14px; color: #666; line-height: 1.6; }
+
+    /* PRICING */
+    .pricing { background: #1A1A1A; color: #fff; }
+    .pricing .section-title { color: #fff; }
+    .pricing .section-sub { color: #aaa; }
+
+    .pricing-table {
+      width: 100%; border-collapse: collapse; margin: 48px 0 56px;
+      font-size: 15px;
+    }
+    .pricing-table th {
+      padding: 14px 20px; text-align: left; font-weight: 700;
+      border-bottom: 1px solid #333; color: #aaa; font-size: 13px;
+    }
+    .pricing-table th.highlight { color: #8B7355; }
+    .pricing-table td {
+      padding: 14px 20px; border-bottom: 1px solid #2a2a2a; color: #ccc;
+    }
+    .pricing-table td.highlight { color: #fff; font-weight: 600; }
+    .pricing-table tr:last-child td { border-bottom: none; }
+
+    .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .plan-card {
+      border-radius: 16px; padding: 32px;
+      border: 1px solid #333;
+    }
+    .plan-card.featured { border-color: #8B7355; background: rgba(139,115,85,0.08); }
+    .plan-badge {
+      display: inline-block; background: #8B7355; color: #fff;
+      border-radius: 20px; padding: 4px 12px; font-size: 11px;
+      font-weight: 700; letter-spacing: 0.5px; margin-bottom: 16px;
+    }
+    .plan-name { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .plan-price { font-size: 42px; font-weight: 800; color: #8B7355; margin-bottom: 4px; }
+    .plan-price span { font-size: 16px; color: #aaa; font-weight: 400; }
+    .plan-desc { font-size: 14px; color: #888; line-height: 1.6; margin-bottom: 24px; }
+    .plan-cta {
+      display: block; text-align: center; background: #8B7355; color: #fff;
+      border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .plan-cta:hover { background: #7a6248; }
+
+    /* SOCIAL PROOF */
+    .proof { background: #F9F6F2; }
+    .proof-card {
+      background: #fff; border-radius: 20px; padding: 40px;
+      display: flex; align-items: center; gap: 40px;
+      margin-top: 40px; flex-wrap: wrap;
+    }
+    .proof-logo {
+      width: 140px; height: 70px; background: #1A1A1A;
+      border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+    }
+    .proof-logo span { color: #8B7355; font-weight: 800; font-size: 18px; }
+    .proof-text h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .proof-text p { font-size: 15px; color: #666; line-height: 1.7; }
+    .proof-badges { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    .proof-badge {
+      background: #F9F6F2; border-radius: 20px; padding: 6px 14px;
+      font-size: 13px; font-weight: 600; color: #8B7355;
+    }
+
+    /* HOW IT WORKS */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 48px; }
+    .step { text-align: center; }
+    .step-number {
+      width: 52px; height: 52px; background: #8B7355; color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 800; margin: 0 auto 16px;
+    }
+    .step-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .step-desc { font-size: 14px; color: #666; line-height: 1.6; }
+
+    /* FOOTER CTA */
+    .footer-cta {
+      background: #1A1A1A; color: #fff; text-align: center; padding: 100px 40px;
+    }
+    .footer-cta h2 {
+      font-size: clamp(28px, 4vw, 48px); font-weight: 800;
+      letter-spacing: -0.5px; margin-bottom: 16px;
+    }
+    .footer-cta p { font-size: 17px; color: #aaa; margin-bottom: 40px; }
+    .footer-cta a {
+      display: inline-block; background: #8B7355; color: #fff;
+      border-radius: 12px; padding: 18px 40px; font-size: 17px; font-weight: 700;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .footer-cta a:hover { background: #7a6248; }
+    .footer-cta .contact { margin-top: 24px; font-size: 14px; color: #555; }
+    .footer-cta .contact a {
+      background: none; padding: 0; font-size: 14px; font-weight: 400;
+      color: #8B7355; text-decoration: underline;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111; color: #555; text-align: center;
+      padding: 24px 40px; font-size: 13px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      section { padding: 60px 20px; }
+      .hero { padding: 120px 20px 80px; }
+      .plans { grid-template-columns: 1fr; }
+      .proof-card { flex-direction: column; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Studio<span>Point</span></div>
+  <a href="#demo" class="nav-cta">Book a Demo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Built for Boutique Fitness Studios</div>
+  <h1>Your Studio.<br/><span>Your App.</span><br/>One Flat Fee.</h1>
+  <p>StudioPoint gives boutique fitness studios a fully branded mobile booking app — no hidden fees, no per-transaction charges, no surprises.</p>
+  <a href="#demo" class="hero-cta">Book a Free Demo</a>
+  <span class="hero-sub">No commitment. 30-minute walkthrough.</span>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="section-inner">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">Tired of Paying More as You Grow?</h2>
+    <p class="section-sub">Most studio management platforms punish your success. The more members you add, the more you pay — in transaction fees, SMS charges, and per-staff seat costs. Mindbody, Glofox, and Pike13 were built to nickel-and-dime you.<br/><br/><strong>StudioPoint was built differently.</strong></p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything Your Studio Needs.<br/>Nothing You Don't.</h2>
+    <p class="section-sub">StudioPoint is a mobile-first booking platform built exclusively for boutique fitness studios. Your members download one app, select your studio, and start booking — it's that simple.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">Class Scheduling & Booking</div>
+        <div class="feature-desc">Members browse your schedule and book classes instantly from their phone.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⏳</div>
+        <div class="feature-title">Waitlist Management</div>
+        <div class="feature-desc">Automatic spot promotion when someone cancels — no manual work required.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <div class="feature-title">Membership Management</div>
+        <div class="feature-desc">Punch cards, unlimited plans, and drop-ins — all managed in one place.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📲</div>
+        <div class="feature-title">QR Code Member Check-In</div>
+        <div class="feature-desc">Members scan in at the front desk from their phone. Fast, contactless, professional.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚫</div>
+        <div class="feature-title">No-Show Tracking & Fees</div>
+        <div class="feature-desc">Automated no-show warnings and fees charged directly to the member's card on file.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">Waiver & Consent Management</div>
+        <div class="feature-desc">Liability, medical, and financial waivers signed digitally before first purchase.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-title">Booking Confirmations & SMS Reminders</div>
+        <div class="feature-desc">Automated emails and SMS so members never miss a class.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🪪</div>
+        <div class="feature-title">Member Profiles & Membership Numbers</div>
+        <div class="feature-desc">Every member gets a unique membership number — tracked from day one.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">Stripe-Powered Payments</div>
+        <div class="feature-desc">Secure, industry-standard payments with no extra processing markup from us.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Backend Reporting Dashboard</div>
+        <div class="feature-desc">Review financials, memberships, attendance, and sales — all in one dashboard.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📤</div>
+        <div class="feature-title">Export Reports</div>
+        <div class="feature-desc">Download your data as Excel, CSV, or PDF anytime you need it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="section-inner">
+    <div class="section-label" style="color:#8B7355">Pricing</div>
+    <h2 class="section-title">Pricing That Makes Sense</h2>
+    <p class="section-sub">One flat monthly fee. No transaction fees. No per-member charges. No surprises.</p>
+
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="highlight">StudioPoint</th>
+          <th>Mindbody</th>
+          <th>Glofox</th>
+          <th>Pike13</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Monthly fee</td>
+          <td class="highlight">$200 flat</td>
+          <td>$139–$599</td>
+          <td>$110–$150</td>
+          <td>$96–$396</td>
+        </tr>
+        <tr>
+          <td>Transaction fees</td>
+          <td class="highlight">None ✅</td>
+          <td>Yes ❌</td>
+          <td>Yes ❌</td>
+          <td>Yes ❌</td>
+        </tr>
+        <tr>
+          <td>Per-member fees</td>
+          <td class="highlight">None ✅</td>
+          <td>Yes ❌</td>
+          <td>Yes ❌</td>
+          <td>Yes ❌</td>
+        </tr>
+        <tr>
+          <td>SMS charges</td>
+          <td class="highlight">None ✅</td>
+          <td>Yes ❌</td>
+          <td>Yes ❌</td>
+          <td>Yes ❌</td>
+        </tr>
+        <tr>
+          <td>Setup fee</td>
+          <td class="highlight">None ✅</td>
+          <td>Yes ❌</td>
+          <td>Yes ❌</td>
+          <td>Yes ❌</td>
+        </tr>
+        <tr>
+          <td>Custom branded app</td>
+          <td class="highlight">✅</td>
+          <td>❌</td>
+          <td>❌</td>
+          <td>❌</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="plans">
+      <div class="plan-card">
+        <div class="plan-badge">GET STARTED</div>
+        <div class="plan-name">Onboarding Plan</div>
+        <div class="plan-price">$500<span>/month</span></div>
+        <div class="plan-desc">For the first 6 months — covers your full custom setup, staff training, and ongoing refinements as your studio grows.</div>
+        <a href="#demo" class="plan-cta">Book a Free Demo</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">ONGOING</div>
+        <div class="plan-name">Standard Plan</div>
+        <div class="plan-price">$200<span>/month</span></div>
+        <div class="plan-desc">After month 6 — unlimited members, unlimited classes, all features included. Forever. No hidden fees, ever.</div>
+        <a href="#demo" class="plan-cta">Book a Free Demo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof">
+  <div class="section-inner">
+    <div class="section-label">Live Example</div>
+    <h2 class="section-title">Live and Booking in Oregon</h2>
+    <p class="section-sub">See StudioPoint in action with a real studio already using the platform.</p>
+
+    <div class="proof-card">
+      <div class="proof-logo"><span>Pilates1</span></div>
+      <div class="proof-text">
+        <h3>Pilates1 — Reformer Pilates & Wellness</h3>
+        <p>StudioPoint powers Pilates1, a reformer Pilates studio currently accepting members for their July 2026 opening. Their members book classes, manage memberships, and check in — all from the StudioPoint app.</p>
+        <div class="proof-badges">
+          <span class="proof-badge">📅 Class Booking</span>
+          <span class="proof-badge">💳 Memberships</span>
+          <span class="proof-badge">📲 QR Check-In</span>
+          <span class="proof-badge">⏳ Waitlist</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">Up and Running in 30 Days</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-title">Book a Demo</div>
+        <div class="step-desc">We walk you through the platform in 30 minutes. No pressure, no commitment.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-title">We Build Your Studio</div>
+        <div class="step-desc">Your logo, your colors, your class schedule — fully configured for your business.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-title">You Go Live</div>
+        <div class="step-desc">Members download StudioPoint, select your studio, and start booking immediately.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-title">We Refine Together</div>
+        <div class="step-desc">6 months of dedicated support to dial everything in as your studio grows.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta" id="demo">
+  <h2>Ready to Ditch the Hidden Fees?</h2>
+  <p>Let's talk. Book a free 30-minute demo and see StudioPoint live.</p>
+  <a href="mailto:hello@studiopoint.net">Book Your Free Demo</a>
+  <div class="contact">
+    Or email us directly at <a href="mailto:hello@studiopoint.net">hello@studiopoint.net</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 StudioPoint. All rights reserved. · <a href="https://sites.google.com/view/studiopoint-privacy/home" style="color:#555">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>
