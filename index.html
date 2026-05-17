@@ -21,12 +21,19 @@
     }
     .nav-logo { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
     .nav-logo span { color: #8B7355; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-link {
+      color: #aaa; text-decoration: none; font-size: 14px; font-weight: 500;
+      padding: 8px 14px; border-radius: 8px; transition: color 0.2s;
+    }
+    .nav-link:hover { color: #fff; }
     .nav-cta {
       background: #8B7355; color: #fff; border: none; border-radius: 8px;
       padding: 10px 22px; font-size: 14px; font-weight: 600; cursor: pointer;
       text-decoration: none;
     }
     .nav-cta:hover { background: #7a6248; }
+    @media (max-width: 640px) { .nav-links { display: none; } }
 
     /* HERO */
     .hero {
@@ -206,7 +213,12 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Studio<span>Point</span></div>
-  <a href="#demo" class="nav-cta">Book a Demo</a>
+  <div class="nav-links">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#proof" class="nav-link">Live Example</a>
+    <a href="#demo" class="nav-cta">Book a Demo</a>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -228,7 +240,7 @@
 </section>
 
 <!-- FEATURES -->
-<section>
+<section id="features">
   <div class="section-inner">
     <div class="section-label">Features</div>
     <h2 class="section-title">Everything Your Studio Needs.<br/>Nothing You Don't.</h2>
@@ -295,7 +307,7 @@
 </section>
 
 <!-- PRICING -->
-<section class="pricing">
+<section class="pricing" id="pricing">
   <div class="section-inner">
     <div class="section-label" style="color:#8B7355">Pricing</div>
     <h2 class="section-title">Pricing That Makes Sense</h2>
@@ -377,7 +389,7 @@
 </section>
 
 <!-- SOCIAL PROOF -->
-<section class="proof">
+<section class="proof" id="proof">
   <div class="section-inner">
     <div class="section-label">Live Example</div>
     <h2 class="section-title">Live and Booking in Oregon</h2>
