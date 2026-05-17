@@ -451,13 +451,65 @@
   </div>
 </section>
 
-<!-- FOOTER CTA -->
+<!-- DEMO FORM -->
 <section class="footer-cta" id="demo">
   <h2>Ready to Ditch the Hidden Fees?</h2>
-  <p>Let's talk. Book a free 30-minute demo and see StudioPoint live.</p>
-  <a href="mailto:hello@studiopoint.net">Book Your Free Demo</a>
-  <div class="contact">
-    Or email us directly at <a href="mailto:hello@studiopoint.net">hello@studiopoint.net</a>
+  <p>Book a free 30-minute demo and see StudioPoint live. No commitment required.</p>
+
+  <form name="demo-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="max-width:540px;margin:40px auto 0;text-align:left;">
+    <input type="hidden" name="form-name" value="demo-request" />
+    <p style="display:none"><input name="bot-field" /></p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div>
+        <label style="display:block;font-size:13px;color:#aaa;margin-bottom:6px;">First Name *</label>
+        <input type="text" name="firstName" required style="width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:13px 16px;font-size:15px;color:#fff;outline:none;" />
+      </div>
+      <div>
+        <label style="display:block;font-size:13px;color:#aaa;margin-bottom:6px;">Last Name *</label>
+        <input type="text" name="lastName" required style="width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:13px 16px;font-size:15px;color:#fff;outline:none;" />
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:13px;color:#aaa;margin-bottom:6px;">Email Address *</label>
+      <input type="email" name="email" required style="width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:13px 16px;font-size:15px;color:#fff;outline:none;" />
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:13px;color:#aaa;margin-bottom:6px;">Studio Name *</label>
+      <input type="text" name="studioName" required placeholder="e.g. Sunrise Yoga Studio" style="width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:13px 16px;font-size:15px;color:#fff;outline:none;" />
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:13px;color:#aaa;margin-bottom:6px;">Phone Number</label>
+      <input type="tel" name="phone" style="width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:13px 16px;font-size:15px;color:#fff;outline:none;" />
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:13px;color:#aaa;margin-bottom:6px;">What platform are you currently using?</label>
+      <select name="currentPlatform" style="width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:13px 16px;font-size:15px;color:#aaa;outline:none;">
+        <option value="">Select one</option>
+        <option>Mindbody</option>
+        <option>Glofox</option>
+        <option>Pike13</option>
+        <option>Zen Planner</option>
+        <option>Manual / Spreadsheets</option>
+        <option>Nothing yet</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <label style="display:block;font-size:13px;color:#aaa;margin-bottom:6px;">Anything else you'd like us to know?</label>
+      <textarea name="message" rows="4" style="width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:13px 16px;font-size:15px;color:#fff;outline:none;resize:vertical;"></textarea>
+    </div>
+
+    <button type="submit" style="width:100%;background:#8B7355;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;">Request My Free Demo</button>
+  </form>
+
+  <div class="contact" style="margin-top:24px;">
+    Prefer email? Reach us at <a href="mailto:hello@studiopoint.net">hello@studiopoint.net</a>
   </div>
 </section>
 
