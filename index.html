@@ -88,7 +88,8 @@
 
     /* PROBLEM */
     .problem { background: #F9F6F2; }
-    .problem .section-title { max-width: 700px; }
+    .problem .section-title { white-space: nowrap; }
+    @media (max-width: 700px) { .problem .section-title { white-space: normal; font-size: 26px; } }
 
     /* FEATURES */
     .features-grid {
@@ -245,7 +246,7 @@
   <div class="section-inner">
     <div class="section-label">The Problem</div>
     <h2 class="section-title">Tired of Paying More as You Grow?</h2>
-    <p class="section-sub">Most studio management platforms punish your success. The more members you add, the more you pay — in transaction fees, SMS charges, and per-staff seat costs. Mindbody, Glofox, and Pike13 were built to nickel-and-dime you.<br/><br/><strong>StudioPoint was built differently.</strong></p>
+    <p class="section-sub">Most studio management platforms punish your success. The more members you add, the more you pay — in transaction fees, SMS charges, and per-staff seat costs. Other companies' business model is to nickel-and-dime you; ours isn't.<br/><br/><strong>StudioPoint was built differently.</strong></p>
   </div>
 </section>
 
@@ -331,6 +332,7 @@
           <th>Mindbody</th>
           <th>Glofox</th>
           <th>Pike13</th>
+          <th>Arketa</th>
         </tr>
       </thead>
       <tbody>
@@ -340,6 +342,7 @@
           <td>$139–$599</td>
           <td>$110–$150</td>
           <td>$96–$396</td>
+          <td>Custom quote</td>
         </tr>
         <tr>
           <td>Transaction fees</td>
@@ -347,6 +350,7 @@
           <td>Yes ❌</td>
           <td>Yes ❌</td>
           <td>Yes ❌</td>
+          <td>3% + Stripe ❌</td>
         </tr>
         <tr>
           <td>Per-member fees</td>
@@ -354,6 +358,7 @@
           <td>Yes ❌</td>
           <td>Yes ❌</td>
           <td>Yes ❌</td>
+          <td>Custom ❌</td>
         </tr>
         <tr>
           <td>SMS charges</td>
@@ -361,6 +366,15 @@
           <td>Yes ❌</td>
           <td>Yes ❌</td>
           <td>Yes ❌</td>
+          <td>Limited ❌</td>
+        </tr>
+        <tr>
+          <td>New member commission fee</td>
+          <td class="highlight">None ✅</td>
+          <td>Yes ❌</td>
+          <td>N/A</td>
+          <td>N/A</td>
+          <td>N/A</td>
         </tr>
         <tr>
           <td>Setup fee</td>
@@ -368,10 +382,12 @@
           <td>Yes ❌</td>
           <td>Yes ❌</td>
           <td>Yes ❌</td>
+          <td>Not listed</td>
         </tr>
         <tr>
           <td>Dedicated onboarding support</td>
-          <td class="highlight">6 months included ✅</td>
+          <td class="highlight">Milestone-based ✅</td>
+          <td>❌</td>
           <td>❌</td>
           <td>❌</td>
           <td>❌</td>
@@ -382,6 +398,7 @@
           <td>❌</td>
           <td>❌</td>
           <td>❌</td>
+          <td>❌</td>
         </tr>
         <tr>
           <td>Custom branded app</td>
@@ -389,6 +406,7 @@
           <td>❌</td>
           <td>❌</td>
           <td>❌</td>
+          <td>Limited ❌</td>
         </tr>
       </tbody>
     </table>
@@ -398,23 +416,23 @@
         <div class="plan-badge">FIRST 6 MONTHS</div>
         <div class="plan-name">Onboarding Plan</div>
         <div class="plan-price">$400<span>/month</span></div>
-        <div class="plan-desc">We don't just hand you software — we build it with you. Your first 6 months include full platform customization, member data migration, custom branding, staff training, and unlimited refinements. We're with you every step of the transition.</div>
+        <div class="plan-desc">We build and test your platform while you continue using your current provider — zero disruption to your revenue or class reservations. When 6 key milestones are complete and you sign off, your fee drops permanently. No calendar. No clock. Just results.</div>
         <a href="#demo" class="plan-cta">Book a Free Demo</a>
       </div>
       <div class="plan-card featured">
         <div class="plan-badge">YOUR REWARD</div>
         <div class="plan-name">Standard Plan</div>
         <div class="plan-price">$200<span>/month</span></div>
-        <div class="plan-desc">After 6 months of customization, your platform is sound and efficient — so your monthly cost is cut in half. It's our way of thanking you for trusting and collaborating with us. Unlimited members, unlimited classes, all features. Forever.</div>
+        <div class="plan-desc">After your onboarding milestones are complete and you've signed off, your platform is sound and efficient — so your monthly cost is cut in half immediately. It's our way of thanking you for trusting and collaborating with us. Unlimited members, unlimited classes, all features. Forever.</div>
         <a href="#demo" class="plan-cta">Book a Free Demo</a>
       </div>
     </div>
 
-    <!-- 6-MONTH VALUE BREAKDOWN -->
+    <!-- ONBOARDING VALUE BREAKDOWN -->
     <div style="margin-top:56px;border:1px solid #333;border-radius:20px;padding:40px;">
-      <div class="section-label" style="color:#8B7355;margin-bottom:12px;">What's Included in Your 6 Months</div>
+      <div class="section-label" style="color:#8B7355;margin-bottom:12px;">What's Included in Your Onboarding</div>
       <h3 style="color:#fff;font-size:22px;font-weight:700;margin-bottom:8px;">A Managed Transition — Not a DIY Setup</h3>
-      <p style="color:#888;font-size:15px;line-height:1.7;margin-bottom:32px;">Switching studio management platforms is one of the most disruptive decisions an owner can make. You're changing how income flows, how members interact with your brand, and how your team operates every day. We take that seriously. Your $400/month isn't just software — it's a dedicated partner through every stage of the transition.</p>
+      <p style="color:#888;font-size:15px;line-height:1.7;margin-bottom:32px;">Switching studio management platforms is one of the most disruptive decisions an owner can make. That's why we build and test your StudioPoint platform while you stay on your current provider — your revenue keeps flowing, your class reservations stay intact, and your members feel nothing. When your platform is ready and you say so, you switch. Your $400/month isn't just software — it's a dedicated partner through every stage of the transition.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
         <div style="background:#222;border-radius:12px;padding:20px;">
           <div style="font-size:24px;margin-bottom:10px;">🎨</div>
@@ -434,7 +452,7 @@
         <div style="background:#222;border-radius:12px;padding:20px;">
           <div style="font-size:24px;margin-bottom:10px;">🔧</div>
           <div style="color:#fff;font-weight:700;margin-bottom:6px;">Unlimited Refinements</div>
-          <div style="color:#888;font-size:14px;line-height:1.6;">As you learn what you need, we adjust. Monthly calls to dial in every detail for 6 full months.</div>
+          <div style="color:#888;font-size:14px;line-height:1.6;">As you learn what you need, we adjust. Monthly calls and unlimited refinements — until every detail is exactly right.</div>
         </div>
         <div style="background:#222;border-radius:12px;padding:20px;">
           <div style="font-size:24px;margin-bottom:10px;">📞</div>
@@ -444,7 +462,57 @@
         <div style="background:#222;border-radius:12px;padding:20px;">
           <div style="font-size:24px;margin-bottom:10px;">✂️</div>
           <div style="color:#fff;font-weight:700;margin-bottom:6px;">Your Fee Cuts in Half</div>
-          <div style="color:#888;font-size:14px;line-height:1.6;">When your platform is solid and your team is confident, your monthly cost drops permanently to $200. That's our promise.</div>
+          <div style="color:#888;font-size:14px;line-height:1.6;">When all 6 milestones are complete and you've signed off, your monthly cost drops to $200 — immediately. We don't hold you to a calendar.</div>
+        </div>
+      </div>
+
+      <!-- MILESTONES -->
+      <div style="margin-top:40px;border-top:1px solid #333;padding-top:36px;">
+        <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:6px;">The 6 Milestones That Unlock Your Reduced Rate</div>
+        <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:24px;">When every milestone below is complete and you sign the completion acknowledgment, your fee drops the very next billing cycle. Finish in 3 months — your fee drops in 3 months. We don't hold you to a calendar.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
+          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">01</div>
+            <div>
+              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Classes Configured</div>
+              <div style="color:#888;font-size:13px;line-height:1.5;">Your full schedule is live and bookable in the platform.</div>
+            </div>
+          </div>
+          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">02</div>
+            <div>
+              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Members Migrated</div>
+              <div style="color:#888;font-size:13px;line-height:1.5;">All member data and membership plans transferred and verified.</div>
+            </div>
+          </div>
+          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">03</div>
+            <div>
+              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Stripe Connected</div>
+              <div style="color:#888;font-size:13px;line-height:1.5;">Payments are live and revenue is flowing directly to your account.</div>
+            </div>
+          </div>
+          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">04</div>
+            <div>
+              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Staff Trained</div>
+              <div style="color:#888;font-size:13px;line-height:1.5;">Your team can manage classes, check-ins, and memberships independently.</div>
+            </div>
+          </div>
+          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">05</div>
+            <div>
+              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">First Billing Cycle Complete</div>
+              <div style="color:#888;font-size:13px;line-height:1.5;">At least one full billing cycle has run without issues.</div>
+            </div>
+          </div>
+          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">06</div>
+            <div>
+              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Owner Sign-Off</div>
+              <div style="color:#888;font-size:13px;line-height:1.5;">You've reviewed your reports and signed the completion acknowledgment. Fee drops immediately.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -497,8 +565,8 @@
       </div>
       <div class="step">
         <div class="step-number">4</div>
-        <div class="step-title">We Refine. Your Fee Drops.</div>
-        <div class="step-desc">6 months of dedicated support, training, and refinements. When your platform is dialed in, your fee is permanently cut in half — our thank you for the trust.</div>
+        <div class="step-title">Milestones Complete. Fee Drops.</div>
+        <div class="step-desc">We build everything while you stay on your current provider — zero disruption. Hit all 6 milestones, sign off, and your fee permanently cuts in half. No calendar. Your timeline.</div>
       </div>
     </div>
   </div>
