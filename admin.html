@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudioPoint — Platform Admin</title>
+<style>
+  :root {
+    --purple: #7C3AED; --purple-dark: #6D28D9; --purple-light: #EDE9FE;
+    --dark: #0f1117; --dark2: #1a1d27; --cream: #F9F4EF;
+    --green: #4CAF50; --red: #E53935; --blue: #1976D2; --orange: #F57C00;
+    --brown: #8B7355; --sidebar-w: 230px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  body { background: #f0ebe4; display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  #sidebar {
+    width: var(--sidebar-w); background: var(--dark); color: #fff;
+    display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; z-index: 100;
+  }
+  #sidebar .logo { padding: 22px 18px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  #sidebar .logo h1 { font-size: 20px; color: #fff; letter-spacing: .3px; }
+  #sidebar .logo p { font-size: 11px; color: var(--purple); margin-top: 3px; font-weight: 600; letter-spacing: .4px; }
+  #sidebar nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+  #sidebar nav a {
+    display: flex; align-items: center; gap: 10px; padding: 11px 18px;
+    color: rgba(255,255,255,.6); text-decoration: none; font-size: 14px; cursor: pointer;
+    transition: all .15s; border-left: 3px solid transparent;
+  }
+  #sidebar nav a:hover { background: rgba(124,58,237,.15); color: #fff; }
+  #sidebar nav a.active { background: rgba(124,58,237,.2); color: #fff; border-left-color: var(--purple); }
+  #sidebar nav a .icon { font-size: 17px; width: 22px; text-align: center; }
+  #sidebar nav .section-label {
+    padding: 16px 18px 6px; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 1px; color: rgba(255,255,255,.25);
+  }
+  #sidebar .footer { padding: 16px 18px; border-top: 1px solid rgba(255,255,255,.08); }
+  #sidebar .footer a { color: rgba(255,255,255,.4); font-size: 13px; cursor: pointer; text-decoration: none; }
+  #sidebar .footer a:hover { color: #fff; }
+
+  /* Main */
+  #main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+  #topbar {
+    background: #fff; padding: 0 28px; height: 56px; display: flex; align-items: center;
+    justify-content: space-between; border-bottom: 1px solid #e8e0d5; position: sticky; top: 0; z-index: 50;
+  }
+  #topbar h2 { font-size: 18px; color: #1a1a1a; font-weight: 700; }
+  #topbar .meta { font-size: 13px; color: #999; }
+  #content { padding: 28px; flex: 1; }
+
+  /* Login */
+  #login-screen {
+    position: fixed; inset: 0; background: var(--dark);
+    display: flex; align-items: center; justify-content: center; z-index: 999;
+  }
+  #login-screen .box {
+    background: #1a1d27; border: 1px solid rgba(124,58,237,.3); border-radius: 16px;
+    padding: 44px 40px; width: 380px; text-align: center;
+  }
+  #login-screen .box .sp-logo { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 4px; letter-spacing: -.5px; }
+  #login-screen .box .sp-sub { font-size: 13px; color: var(--purple); font-weight: 600; margin-bottom: 28px; letter-spacing: .3px; }
+  .form-input {
+    width: 100%; padding: 12px 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 10px;
+    font-size: 15px; margin-bottom: 12px; color: #fff; background: rgba(255,255,255,.06); outline: none;
+  }
+  .form-input:focus { border-color: var(--purple); }
+  .form-input::placeholder { color: rgba(255,255,255,.3); }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 9px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .15s; white-space: nowrap; }
+  .btn:hover { opacity: .88; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-purple  { background: var(--purple); color: #fff; }
+  .btn-dark    { background: var(--dark2); color: #fff; }
+  .btn-green   { background: var(--green); color: #fff; }
+  .btn-red     { background: var(--red); color: #fff; }
+  .btn-blue    { background: var(--blue); color: #fff; }
+  .btn-outline { background: transparent; border: 1.5px solid #ddd; color: #555; }
+  .btn-sm      { padding: 6px 12px; font-size: 12px; }
+  .btn-full    { width: 100%; justify-content: center; }
+
+  /* Cards */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card {
+    background: #fff; border-radius: 14px; padding: 22px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .stat-card .val { font-size: 34px; font-weight: 800; color: #1a1a1a; }
+  .stat-card .lbl { font-size: 12px; color: #999; margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+  .stat-card .sub { font-size: 12px; color: var(--purple); margin-top: 3px; font-weight: 500; }
+
+  /* Panels */
+  .panel { background: #fff; border-radius: 14px; padding: 22px 24px; box-shadow: 0 1px 4px rgba(0,0,0,.06); margin-bottom: 22px; }
+  .panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+  .panel-header h3 { font-size: 16px; color: #1a1a1a; font-weight: 700; }
+  .panel-header .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Tables */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .tbl th { background: #faf7f3; color: #555; font-weight: 700; padding: 10px 14px; text-align: left; border-bottom: 2px solid #f0ebe4; white-space: nowrap; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; }
+  .tbl td { padding: 12px 14px; border-bottom: 1px solid #f5f2ee; color: #333; vertical-align: middle; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: #faf8f5; }
+  .tbl .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* Badges */
+  .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; }
+  .badge-green  { background: #E8F5E9; color: #2E7D32; }
+  .badge-red    { background: #FFEBEE; color: #C62828; }
+  .badge-blue   { background: #E3F2FD; color: #1565C0; }
+  .badge-orange { background: #FFF3E0; color: #E65100; }
+  .badge-gray   { background: #F5F5F5; color: #616161; }
+  .badge-purple { background: var(--purple-light); color: var(--purple-dark); }
+
+  /* Studio card (on Studios page) */
+  .studio-card {
+    background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06); border-left: 4px solid var(--purple);
+    display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start;
+  }
+  .studio-card.onboarding { border-left-color: var(--orange); }
+  .studio-card.paused { border-left-color: #ccc; }
+  .studio-name { font-size: 18px; font-weight: 800; color: #1a1a1a; margin-bottom: 4px; }
+  .studio-meta { font-size: 13px; color: #888; margin-bottom: 14px; }
+  .studio-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+  .studio-stat .val { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .studio-stat .lbl { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: .4px; }
+
+  /* Alerts */
+  .alert { padding: 12px 16px; border-radius: 10px; font-size: 13px; margin-bottom: 16px; }
+  .alert-orange { background: #FFF3E0; color: #E65100; border-left: 4px solid var(--orange); }
+  .alert-green  { background: #E8F5E9; color: #2E7D32; border-left: 4px solid var(--green); }
+  .alert-purple { background: var(--purple-light); color: var(--purple-dark); border-left: 4px solid var(--purple); }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto; }
+  .modal h3 { font-size: 18px; color: #1a1a1a; margin-bottom: 20px; font-weight: 700; }
+  .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group label { font-size: 12px; font-weight: 600; color: #555; }
+  .form-group input, .form-group select, .form-group textarea { padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; color: #333; outline: none; }
+  .form-group input:focus, .form-group select:focus { border-color: var(--purple); }
+  .form-span-2 { grid-column: span 2; }
+  .date-range { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .date-range input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; }
+
+  .hidden { display: none !important; }
+  .spinner { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
+  .empty   { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="box">
+    <div class="sp-logo">StudioPoint</div>
+    <div class="sp-sub">PLATFORM ADMIN</div>
+    <input class="form-input" id="login-email" type="email" placeholder="Admin email" autocomplete="email">
+    <input class="form-input" id="login-password" type="password" placeholder="Password" autocomplete="current-password">
+    <div id="login-error" style="color:#f87171;font-size:13px;margin-bottom:12px;display:none"></div>
+    <button class="btn btn-purple btn-full" onclick="doLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo">
+    <h1>StudioPoint</h1>
+    <p>PLATFORM ADMIN</p>
+  </div>
+  <nav>
+    <a class="active" onclick="showPage('dashboard')"><span class="icon">📊</span> Platform Overview</a>
+    <a onclick="showPage('studios')"><span class="icon">🏢</span> Studios</a>
+    <div class="section-label">Data</div>
+    <a onclick="showPage('members')"><span class="icon">👥</span> All Members</a>
+    <a onclick="showPage('insights')"><span class="icon">📡</span> Data Insights</a>
+    <div class="section-label">Finance</div>
+    <a onclick="showPage('billing')"><span class="icon">💰</span> StudioPoint Billing</a>
+    <a onclick="showPage('reports')"><span class="icon">📈</span> Platform Reports</a>
+    <div class="section-label">System</div>
+    <a onclick="showPage('settings')"><span class="icon">⚙️</span> Settings</a>
+  </nav>
+  <div class="footer"><a onclick="doLogout()">⬅ Sign Out</a></div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <h2 id="page-title">Platform Overview</h2>
+    <span class="meta" id="topbar-user"></span>
+  </div>
+  <div id="content"></div>
+</div>
+
+<div id="modal-container"></div>
+
+<script>
+// ─────────────────────────────────────────
+// STUDIO REGISTRY — add new studios here as they onboard
+// ─────────────────────────────────────────
+const STUDIO_REGISTRY = [
+  {
+    id: 'pilates1',
+    name: 'Pilates1 Studio',
+    location: 'South Salem, OR',
+    status: 'ONBOARDING',
+    plan: 'Onboarding',
+    planFee: 400,
+    openDate: 'August 1, 2026',
+    owner: 'Sheri Isaac',
+    email: 'Frontdesk@pilates1studio.com',
+    website: 'https://pilates1studio.com',
+    api: 'https://pilates-studio-api-production-b2a1.up.railway.app/api',
+  },
+  // { id: 'studio2', name: 'Studio Name', location: 'City, ST', status: 'ONBOARDING', ... }
+];
+
+const API = STUDIO_REGISTRY[0].api; // primary API (Pilates1 for now)
+let TOKEN = localStorage.getItem('sp_platform_token') || '';
+let CURRENT_USER = null;
+
+// ─────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+  try {
+    const r = await fetch(`${API}/auth/login`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass }),
+    });
+    const d = await r.json();
+    if (!r.ok || !['ADMIN','SUPERADMIN'].includes(d.user?.role)) {
+      errEl.textContent = d.error || 'Access denied — admin credentials required.';
+      errEl.style.display = 'block'; return;
+    }
+    TOKEN = d.token; CURRENT_USER = d.user;
+    localStorage.setItem('sp_platform_token', TOKEN);
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('topbar-user').textContent = `${d.user.firstName} ${d.user.lastName}`;
+    showPage('dashboard');
+  } catch(e) { errEl.textContent = 'Connection error'; errEl.style.display = 'block'; }
+}
+
+function doLogout() {
+  TOKEN = ''; localStorage.removeItem('sp_platform_token'); location.reload();
+}
+
+async function api(path, opts = {}) {
+  const r = await fetch(`${API}${path}`, {
+    ...opts,
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TOKEN}`, ...(opts.headers || {}) },
+  });
+  if (r.status === 401) { doLogout(); return null; }
+  return r.json();
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  if (!TOKEN) return;
+  try {
+    const r = await fetch(`${API}/auth/me`, { headers: { 'Authorization': `Bearer ${TOKEN}` } });
+    if (r.ok) {
+      const d = await r.json();
+      if (['ADMIN','SUPERADMIN'].includes(d.role)) {
+        CURRENT_USER = d;
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('topbar-user').textContent = `${d.firstName} ${d.lastName}`;
+        showPage('dashboard');
+      }
+    }
+  } catch(e) {}
+});
+document.getElementById('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// ─────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────
+const PAGE_TITLES = {
+  dashboard: 'Platform Overview', studios: 'Studios', members: 'All Members',
+  insights: 'Data Insights', billing: 'StudioPoint Billing', reports: 'Platform Reports', settings: 'Settings',
+};
+
+function showPage(page) {
+  document.querySelectorAll('#sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('onclick')?.includes(`'${page}'`));
+  });
+  document.getElementById('page-title').textContent = PAGE_TITLES[page] || page;
+  document.getElementById('content').innerHTML = '<div class="spinner">Loading…</div>';
+  const pages = { dashboard, studios, members, insights, billing, reports, settings };
+  if (pages[page]) pages[page]();
+}
+
+function modal(html) {
+  document.getElementById('modal-container').innerHTML =
+    `<div class="modal-overlay" onclick="if(event.target===this)closeModal()">${html}</div>`;
+}
+function closeModal() { document.getElementById('modal-container').innerHTML = ''; }
+function fmt$(n) { return '$' + parseFloat(n || 0).toFixed(2); }
+function fmtDate(d) { return d ? new Date(d).toLocaleDateString() : '—'; }
+
+// ─────────────────────────────────────────
+// PLATFORM OVERVIEW
+// ─────────────────────────────────────────
+async function dashboard() {
+  const d = await api('/reports/dashboard');
+  if (!d) return;
+
+  const totalMonthlyRecurring = STUDIO_REGISTRY.reduce((sum, s) => sum + s.planFee, 0);
+  const activeStudios = STUDIO_REGISTRY.filter(s => s.status === 'ACTIVE').length;
+  const onboardingStudios = STUDIO_REGISTRY.filter(s => s.status === 'ONBOARDING').length;
+
+  document.getElementById('content').innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="val">${STUDIO_REGISTRY.length}</div>
+        <div class="lbl">Total Studios</div>
+        <div class="sub">${activeStudios} active · ${onboardingStudios} onboarding</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" style="color:var(--purple)">$${totalMonthlyRecurring.toLocaleString()}</div>
+        <div class="lbl">StudioPoint MRR</div>
+        <div class="sub">Monthly recurring revenue</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">${d.members.total}</div>
+        <div class="lbl">Platform Members</div>
+        <div class="sub">${d.members.newThisMonth} new this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">${d.members.active}</div>
+        <div class="lbl">Active Memberships</div>
+        <div class="sub">${d.members.frozen} frozen</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">${fmt$(d.revenue.thisMonth)}</div>
+        <div class="lbl">Studio Revenue (MTD)</div>
+        <div class="sub">Across all studios</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">${d.bookings.thisMonth}</div>
+        <div class="lbl">Bookings (MTD)</div>
+        <div class="sub">Across all studios</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3>Studios at a Glance</h3>
+        <button class="btn btn-purple btn-sm" onclick="showPage('studios')">Manage Studios →</button>
+      </div>
+      ${STUDIO_REGISTRY.map(s => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f5f2ee;">
+          <div>
+            <div style="font-weight:700;color:#1a1a1a">${s.name}</div>
+            <div style="font-size:13px;color:#888">${s.location} · ${s.owner}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <span class="badge badge-${s.status === 'ACTIVE' ? 'green' : s.status === 'ONBOARDING' ? 'orange' : 'gray'}">${s.status}</span>
+            <span style="font-size:13px;font-weight:700;color:var(--purple)">$${s.planFee}/mo</span>
+            <button class="btn btn-outline btn-sm" onclick="showPage('studios')">View</button>
+          </div>
+        </div>`).join('')}
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><h3>Quick Actions</h3></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-purple" onclick="showPage('studios')">🏢 Manage Studios</button>
+        <button class="btn btn-dark" onclick="showPage('billing')">💰 View Billing</button>
+        <button class="btn btn-outline" onclick="showPage('members')">👥 All Members</button>
+        <button class="btn btn-outline" onclick="showPage('insights')">📡 Data Insights</button>
+        <button class="btn btn-outline" onclick="showPage('reports')">📈 Platform Reports</button>
+      </div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────
+// STUDIOS
+// ─────────────────────────────────────────
+async function studios() {
+  const d = await api('/reports/dashboard');
+  if (!d) return;
+
+  // Enrich first studio with live data; future studios will each have their own API call
+  const enriched = STUDIO_REGISTRY.map((s, i) => ({
+    ...s,
+    members: i === 0 ? d.members.total : '—',
+    active: i === 0 ? d.members.active : '—',
+    revenueMonth: i === 0 ? d.revenue.thisMonth : null,
+    bookingsMonth: i === 0 ? d.bookings.thisMonth : '—',
+  }));
+
+  document.getElementById('content').innerHTML = `
+    <div style="display:flex;justify-content:flex-end;margin-bottom:18px">
+      <button class="btn btn-purple" onclick="addStudioModal()">+ Onboard New Studio</button>
+    </div>
+
+    ${enriched.map(s => `
+      <div class="studio-card ${s.status.toLowerCase()}">
+        <div>
+          <div class="studio-name">${s.name}</div>
+          <div class="studio-meta">
+            📍 ${s.location} &nbsp;·&nbsp;
+            👤 ${s.owner} &nbsp;·&nbsp;
+            ✉️ <a href="mailto:${s.email}" style="color:var(--purple)">${s.email}</a> &nbsp;·&nbsp;
+            🌐 <a href="${s.website}" target="_blank" style="color:var(--purple)">${s.website}</a>
+          </div>
+          <div class="studio-stats">
+            <div class="studio-stat"><div class="val">${s.members}</div><div class="lbl">Members</div></div>
+            <div class="studio-stat"><div class="val">${s.active}</div><div class="lbl">Active</div></div>
+            <div class="studio-stat"><div class="val">${s.revenueMonth !== null ? fmt$(s.revenueMonth) : '—'}</div><div class="lbl">Revenue MTD</div></div>
+            <div class="studio-stat"><div class="val">${s.bookingsMonth}</div><div class="lbl">Bookings MTD</div></div>
+            <div class="studio-stat"><div class="val" style="color:#aaa">—</div><div class="lbl">Conversion</div></div>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+            <span class="badge badge-${s.status === 'ACTIVE' ? 'green' : s.status === 'ONBOARDING' ? 'orange' : 'gray'}">${s.status}</span>
+            <span class="badge badge-purple">${s.plan} · $${s.planFee}/mo</span>
+            <span style="font-size:12px;color:#aaa;padding:3px 0">Opens ${s.openDate}</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;min-width:130px">
+          <button class="btn btn-purple btn-sm" onclick="window.open('${s.api.replace('/api','')}','_blank')">API Health ↗</button>
+          <button class="btn btn-outline btn-sm" onclick="studioConfigModal('${s.id}')">Configure</button>
+          <button class="btn btn-outline btn-sm" onclick="window.open('${s.website}','_blank')">Website ↗</button>
+        </div>
+      </div>`).join('')}`;
+}
+
+function addStudioModal() {
+  modal(`<div class="modal">
+    <h3>Onboard New Studio</h3>
+    <div class="form-grid">
+      <div class="form-group form-span-2"><label>Studio Name</label><input id="ns-name" class="form-input" placeholder="e.g. Momentum Pilates"></div>
+      <div class="form-group"><label>Owner Name</label><input id="ns-owner" class="form-input" placeholder="Full name"></div>
+      <div class="form-group"><label>Owner Email</label><input id="ns-email" class="form-input" type="email" placeholder="owner@studio.com"></div>
+      <div class="form-group"><label>City, State</label><input id="ns-location" class="form-input" placeholder="e.g. Portland, OR"></div>
+      <div class="form-group"><label>Open Date</label><input id="ns-open" class="form-input" type="date"></div>
+      <div class="form-group"><label>StudioPoint Plan</label>
+        <select id="ns-plan" class="form-input">
+          <option value="400">Onboarding — $400/mo</option>
+          <option value="250">Standard — $250/mo</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Website</label><input id="ns-site" class="form-input" placeholder="https://..."></div>
+      <div class="form-group form-span-2"><label>API URL (Railway deployment)</label><input id="ns-api" class="form-input" placeholder="https://...railway.app/api"></div>
+    </div>
+    <p style="font-size:12px;color:#aaa;margin-top:14px">After saving, add the studio entry to STUDIO_REGISTRY in admin.html and redeploy.</p>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-purple" onclick="alert('Studio details noted. Add to STUDIO_REGISTRY and redeploy to activate.')">Save Details</button>
+    </div>
+  </div>`);
+}
+
+function studioConfigModal(studioId) {
+  const s = STUDIO_REGISTRY.find(x => x.id === studioId);
+  if (!s) return;
+  modal(`<div class="modal">
+    <h3>Configure — ${s.name}</h3>
+    <div style="font-size:14px;color:#555;line-height:1.8;margin-bottom:20px">
+      <div><strong>Owner:</strong> ${s.owner}</div>
+      <div><strong>Email:</strong> ${s.email}</div>
+      <div><strong>Location:</strong> ${s.location}</div>
+      <div><strong>Plan:</strong> ${s.plan} — $${s.planFee}/mo</div>
+      <div><strong>Open Date:</strong> ${s.openDate}</div>
+      <div><strong>API:</strong> <a href="${s.api}" target="_blank" style="color:var(--purple)">${s.api}</a></div>
+      <div><strong>Website:</strong> <a href="${s.website}" target="_blank" style="color:var(--purple)">${s.website}</a></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Close</button>
+      <button class="btn btn-purple" onclick="window.open('${s.website}/admin.html','_blank');closeModal()">Open Studio Portal ↗</button>
+    </div>
+  </div>`);
+}
+
+// ─────────────────────────────────────────
+// ALL MEMBERS
+// ─────────────────────────────────────────
+async function members() {
+  const data = await api('/memberships/admin/members');
+  if (!data) return;
+  document.getElementById('content').innerHTML = `
+    <div class="panel">
+      <div class="panel-header">
+        <h3>Platform Members (${data.length})</h3>
+        <input id="member-search" style="padding:7px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:220px" placeholder="Search name or email…" oninput="filterMembers()">
+      </div>
+      <div style="overflow-x:auto">
+      <table class="tbl" id="members-table">
+        <thead><tr><th>Member</th><th>Email</th><th>Studio</th><th>Plan</th><th>Status</th><th>No-Shows</th><th>Joined</th></tr></thead>
+        <tbody>
+        ${data.map(u => {
+          const m = u.memberships?.[0];
+          return `<tr data-name="${(u.firstName+' '+u.lastName).toLowerCase()}" data-email="${u.email.toLowerCase()}">
+            <td><strong>${u.firstName} ${u.lastName}</strong></td>
+            <td>${u.email}</td>
+            <td><span class="badge badge-purple">Pilates1</span></td>
+            <td>${m?.plan?.name || m?.type || '<em style="color:#aaa">None</em>'}</td>
+            <td>${m ? `<span class="badge badge-${m.status==='ACTIVE'?'green':m.status==='FROZEN'?'blue':'gray'}">${m.status}</span>` : '<span class="badge badge-gray">NONE</span>'}</td>
+            <td>${u.noShowCount}</td>
+            <td>${fmtDate(u.createdAt)}</td>
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+      </div>
+    </div>`;
+}
+
+function filterMembers() {
+  const q = document.getElementById('member-search').value.toLowerCase();
+  document.querySelectorAll('#members-table tbody tr').forEach(tr => {
+    tr.style.display = (tr.dataset.name.includes(q) || tr.dataset.email.includes(q)) ? '' : 'none';
+  });
+}
+
+// ─────────────────────────────────────────
+// DATA INSIGHTS
+// ─────────────────────────────────────────
+async function insights() {
+  const d = await api('/reports/dashboard');
+  if (!d) return;
+  document.getElementById('content').innerHTML = `
+    <div class="alert alert-purple" style="margin-bottom:22px">
+      📡 <strong>First-Party Data Advantage.</strong>
+      StudioPoint owns identified user data across all studios — name, email, phone, and in-app behavior.
+      Anonymous visitor tracking will activate once session logging is enabled (#11).
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="val" style="color:#aaa">—</div>
+        <div class="lbl">Platform Lookers</div>
+        <div class="sub">Pending session logging</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">${d.members.total}</div>
+        <div class="lbl">Identified Members</div>
+        <div class="sub">Across all studios</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" style="color:#aaa">—%</div>
+        <div class="lbl">Platform Conversion</div>
+        <div class="sub">Lookers → Members</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">${STUDIO_REGISTRY.length}</div>
+        <div class="lbl">Studios</div>
+        <div class="sub">Data sources</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><h3>Per-Studio Conversion Tracker</h3></div>
+      <table class="tbl">
+        <thead><tr><th>Studio</th><th>Lookers</th><th>Members</th><th>Conversion Rate</th><th>Health</th></tr></thead>
+        <tbody>
+          ${STUDIO_REGISTRY.map(s => `<tr>
+            <td><strong>${s.name}</strong><br><small style="color:#aaa">${s.location}</small></td>
+            <td><span style="color:#aaa">—</span></td>
+            <td>${s.id === 'pilates1' ? d.members.active : '—'}</td>
+            <td><span style="color:#aaa">—%</span></td>
+            <td><span class="badge badge-gray">Pending</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:#aaa;margin-top:14px">
+        Conversion thresholds: <span style="color:#2E7D32">●</span> 40%+ Healthy &nbsp;
+        <span style="color:#F57C00">●</span> 30–40% Acceptable &nbsp;
+        <span style="color:#E65100">●</span> 20–30% Warning &nbsp;
+        <span style="color:#C62828">●</span> &lt;20% Critical
+      </p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><h3>Data Roadmap</h3></div>
+      <table class="tbl">
+        <thead><tr><th>Feature</th><th>Description</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Anonymous Session Logging</strong></td><td>Track app downloads and studio views by non-registered users</td><td><span class="badge badge-orange">In Progress</span></td></tr>
+          <tr><td><strong>Conversion Rate Dashboard</strong></td><td>Live looker → member conversion per studio</td><td><span class="badge badge-gray">Blocked by above</span></td></tr>
+          <tr><td><strong>Hashed Audience Export</strong></td><td>SHA-256 export of member list for Meta Custom Audiences</td><td><span class="badge badge-orange">Planned</span></td></tr>
+          <tr><td><strong>Managed Ad Campaigns</strong></td><td>StudioPoint runs targeted FB/IG ads for studio owners using internal data</td><td><span class="badge badge-gray">Planned</span></td></tr>
+          <tr><td><strong>Cross-Studio Lookalike Audiences</strong></td><td>Aggregate platform data for powerful lookalike targeting at 50+ studios</td><td><span class="badge badge-gray">Future</span></td></tr>
+          <tr><td><strong>P1 Lifestyle Brand Targeting</strong></td><td>Market Pilates1 apparel/lifestyle to all StudioPoint app users</td><td><span class="badge badge-gray">Future</span></td></tr>
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ─────────────────────────────────────────
+// STUDIOPOINT BILLING
+// ─────────────────────────────────────────
+function billing() {
+  const mrr = STUDIO_REGISTRY.reduce((sum, s) => sum + s.planFee, 0);
+  const activeCount = STUDIO_REGISTRY.filter(s => s.status === 'ACTIVE').length;
+  const onboardCount = STUDIO_REGISTRY.filter(s => s.status === 'ONBOARDING').length;
+
+  document.getElementById('content').innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="val" style="color:var(--purple)">$${mrr.toLocaleString()}</div>
+        <div class="lbl">Monthly Recurring Revenue</div>
+        <div class="sub">StudioPoint subscription fees</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">$${(mrr * 12).toLocaleString()}</div>
+        <div class="lbl">Annualized ARR</div>
+        <div class="sub">At current studio count</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">${STUDIO_REGISTRY.length}</div>
+        <div class="lbl">Total Studios</div>
+        <div class="sub">${activeCount} active · ${onboardCount} onboarding</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">$0</div>
+        <div class="lbl">Transaction Fees</div>
+        <div class="sub">We don't penalize success</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><h3>Studio Subscriptions</h3></div>
+      <table class="tbl">
+        <thead><tr><th>Studio</th><th>Plan</th><th>Monthly Fee</th><th>Status</th><th>Milestone</th><th>Next Step</th></tr></thead>
+        <tbody>
+          ${STUDIO_REGISTRY.map(s => `<tr>
+            <td>
+              <strong>${s.name}</strong><br>
+              <small style="color:#aaa">${s.owner} · ${s.location}</small>
+            </td>
+            <td><span class="badge badge-purple">${s.plan}</span></td>
+            <td style="font-weight:700;color:var(--purple)">$${s.planFee}/mo</td>
+            <td><span class="badge badge-${s.status==='ACTIVE'?'green':s.status==='ONBOARDING'?'orange':'gray'}">${s.status}</span></td>
+            <td><span style="font-size:13px;color:#aaa">Tracking milestones</span></td>
+            <td><button class="btn btn-outline btn-sm" onclick="billingDetailModal('${s.id}')">Details</button></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><h3>Growth Projections</h3></div>
+      <table class="tbl">
+        <thead><tr><th>Studios</th><th>MRR (Onboarding)</th><th>MRR (Standard)</th><th>ARR</th></tr></thead>
+        <tbody>
+          ${[1,5,10,25,50,100].map(n => `<tr ${n===STUDIO_REGISTRY.length?'style="background:#f5f0ff;font-weight:700"':''}>
+            <td>${n}${n===STUDIO_REGISTRY.length?' ← current':''}</td>
+            <td>$${(n*400).toLocaleString()}/mo</td>
+            <td>$${(n*250).toLocaleString()}/mo</td>
+            <td>$${(n*250*12).toLocaleString()}/yr</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+function billingDetailModal(studioId) {
+  const s = STUDIO_REGISTRY.find(x => x.id === studioId);
+  if (!s) return;
+  modal(`<div class="modal">
+    <h3>Billing — ${s.name}</h3>
+    <div style="font-size:14px;color:#555;line-height:2;margin-bottom:16px">
+      <div><strong>Plan:</strong> ${s.plan}</div>
+      <div><strong>Monthly Fee:</strong> $${s.planFee}/mo</div>
+      <div><strong>Status:</strong> ${s.status}</div>
+      <div><strong>Transition to Standard:</strong> After 6 milestones complete → $250/mo</div>
+    </div>
+    <div style="font-size:13px;color:#aaa">Stripe billing integration and automated invoicing coming soon.</div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal()">Close</button></div>
+  </div>`);
+}
+
+// ─────────────────────────────────────────
+// PLATFORM REPORTS
+// ─────────────────────────────────────────
+function reports() {
+  const today = new Date().toISOString().slice(0,10);
+  const firstOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().slice(0,10);
+  document.getElementById('content').innerHTML = `
+    <div class="panel">
+      <div class="panel-header"><h3>Date Range</h3></div>
+      <div class="date-range">
+        <label style="font-size:13px;font-weight:600">Studio:</label>
+        <select id="rep-studio" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px">
+          ${STUDIO_REGISTRY.map(s => `<option value="${s.id}">${s.name}</option>`).join('')}
+        </select>
+        <label style="font-size:13px;font-weight:600">From:</label>
+        <input type="date" id="rep-start" value="${firstOfMonth}">
+        <label style="font-size:13px;font-weight:600">To:</label>
+        <input type="date" id="rep-end" value="${today}">
+      </div>
+    </div>
+    ${[
+      { id:'financial',   label:'💰 Financial Report',   desc:'Revenue by type — memberships, bookings, fees, tabs' },
+      { id:'memberships', label:'💳 Membership Report',   desc:'Signups, cancellations, freezes, grandfathered rates' },
+      { id:'attendance',  label:'📊 Attendance Report',   desc:'Class fill rates, no-shows, attendance by class' },
+      { id:'noshows',     label:'⚠️ No-Show Report',      desc:'Fees charged, waived, failed — by member' },
+      { id:'members',     label:'👥 Member Directory',    desc:'Full member list with plan, rate, status' },
+    ].map(r => `
+      <div class="panel">
+        <div class="panel-header">
+          <div><h3>${r.label}</h3><p style="font-size:13px;color:#888;margin-top:2px">${r.desc}</p></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline btn-sm" onclick="exportReport('${r.id}','json')">Preview</button>
+            <button class="btn btn-outline btn-sm" onclick="exportReport('${r.id}','csv')">CSV</button>
+            <button class="btn btn-blue btn-sm" onclick="exportReport('${r.id}','excel')">Excel</button>
+            <button class="btn btn-dark btn-sm" onclick="exportReport('${r.id}','pdf')">PDF</button>
+          </div>
+        </div>
+        <div id="preview-${r.id}" class="hidden"></div>
+      </div>`).join('')}`;
+}
+
+async function exportReport(type, format) {
+  const start = document.getElementById('rep-start').value;
+  const end   = document.getElementById('rep-end').value;
+  const params = `?start=${start}&end=${end}&format=${format}`;
+  if (format === 'json') {
+    const d = await api(`/reports/${type}${params}`);
+    if (!d) return;
+    const el = document.getElementById(`preview-${type}`);
+    if (!d.rows?.length) { el.innerHTML = '<p class="empty">No data for this range</p>'; el.classList.remove('hidden'); return; }
+    el.innerHTML = `<p style="font-size:13px;color:#888;margin-bottom:10px">${d.count} records</p>
+      <div style="overflow-x:auto"><table class="tbl">
+        <thead><tr>${(d.rows[0]||[]).map(v=>`<th>${v}</th>`).join('')}</tr></thead>
+        <tbody>${d.rows.slice(1,11).map(row=>`<tr>${row.map(v=>`<td>${v??''}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table>${d.count>10?`<p style="font-size:12px;color:#aaa;margin-top:8px">Showing 10 of ${d.count} — export for all</p>`:''}</div>`;
+    el.classList.remove('hidden'); return;
+  }
+  const r = await fetch(`${API}/reports/${type}${params}`, { headers: { 'Authorization': `Bearer ${TOKEN}` } });
+  const blob = await r.blob();
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `${type}-${start}-${end}.${format === 'excel' ? 'xlsx' : format}`;
+  link.click();
+}
+
+// ─────────────────────────────────────────
+// SETTINGS
+// ─────────────────────────────────────────
+async function settings() {
+  const me = await api('/users/me');
+  if (!me) return;
+  document.getElementById('content').innerHTML = `
+    <div class="panel">
+      <div class="panel-header"><h3>Platform Account</h3></div>
+      <p style="font-size:14px;color:#555;margin-bottom:20px">
+        Signed in as <strong>${me.firstName} ${me.lastName}</strong> — ${me.email}
+      </p>
+      <h4 style="font-size:14px;margin-bottom:12px">Change Password</h4>
+      <div class="form-grid" style="max-width:480px;margin-bottom:8px">
+        <div class="form-group form-span-2"><label>Current Password</label><input id="cur-pass" style="padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;width:100%;" type="password"></div>
+        <div class="form-group"><label>New Password</label><input id="new-pass" style="padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;width:100%;" type="password"></div>
+        <div class="form-group"><label>Confirm</label><input id="confirm-pass" style="padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;width:100%;" type="password"></div>
+      </div>
+      <button class="btn btn-purple" onclick="changePassword()">Update Password</button>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><h3>Studio Registry</h3></div>
+      <p style="font-size:13px;color:#888;margin-bottom:16px">
+        Add new studios by editing the <code>STUDIO_REGISTRY</code> array in this file and redeploying to Netlify.
+        Each studio entry requires: name, location, owner, email, website, API URL, plan, openDate.
+      </p>
+      <table class="tbl">
+        <thead><tr><th>ID</th><th>Studio</th><th>API URL</th><th>Plan Fee</th></tr></thead>
+        <tbody>
+          ${STUDIO_REGISTRY.map(s => `<tr>
+            <td><code>${s.id}</code></td>
+            <td>${s.name}</td>
+            <td style="font-size:12px;color:#888">${s.api}</td>
+            <td>$${s.planFee}/mo</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+async function changePassword() {
+  const currentPassword = document.getElementById('cur-pass').value;
+  const newPassword     = document.getElementById('new-pass').value;
+  const confirmPassword = document.getElementById('confirm-pass').value;
+  if (!currentPassword || !newPassword) return alert('Please fill in all fields.');
+  if (newPassword !== confirmPassword) return alert('New passwords do not match.');
+  if (newPassword.length < 8) return alert('Password must be at least 8 characters.');
+  const r = await api('/users/me/password', { method: 'PATCH', body: JSON.stringify({ currentPassword, newPassword }) });
+  if (r?.updated) alert('Password updated successfully!');
+  else alert(r?.error || 'Failed to update password.');
+}
+</script>
+</body>
+</html>
