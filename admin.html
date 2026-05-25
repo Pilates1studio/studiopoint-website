@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StudioPoint — Platform Admin</title>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 <style>
   :root {
     --purple: #7C3AED; --purple-dark: #6D28D9; --purple-light: #EDE9FE;
@@ -179,6 +180,7 @@
     <a onclick="showPage('members')"><span class="icon">👥</span> All Members</a>
     <a onclick="showPage('insights')"><span class="icon">📡</span> Data Insights</a>
     <div class="section-label">Finance</div>
+    <a onclick="showPage('bank')"><span class="icon">🏦</span> Bank Account</a>
     <a onclick="showPage('billing')"><span class="icon">💰</span> StudioPoint Billing</a>
     <a onclick="showPage('reports')"><span class="icon">📈</span> Platform Reports</a>
     <div class="section-label">System</div>
@@ -284,7 +286,7 @@ document.getElementById('login-password').addEventListener('keydown', e => { if 
 // ─────────────────────────────────────────
 const PAGE_TITLES = {
   dashboard: 'Platform Overview', studios: 'Studios', members: 'All Members',
-  insights: 'Data Insights', billing: 'StudioPoint Billing', reports: 'Platform Reports', settings: 'Settings',
+  insights: 'Data Insights', bank: 'Bank Account', billing: 'StudioPoint Billing', reports: 'Platform Reports', settings: 'Settings',
 };
 
 function showPage(page) {
@@ -293,7 +295,7 @@ function showPage(page) {
   });
   document.getElementById('page-title').textContent = PAGE_TITLES[page] || page;
   document.getElementById('content').innerHTML = '<div class="spinner">Loading…</div>';
-  const pages = { dashboard, studios, members, insights, billing, reports, settings };
+  const pages = { dashboard, studios, members, insights, bank, billing, reports, settings };
   if (pages[page]) pages[page]();
 }
 
@@ -742,6 +744,135 @@ async function exportReport(type, format) {
   link.href = URL.createObjectURL(blob);
   link.download = `${type}-${start}-${end}.${format === 'excel' ? 'xlsx' : format}`;
   link.click();
+}
+
+// ─────────────────────────────────────────
+// BANK ACCOUNT (Plaid)
+// ─────────────────────────────────────────
+async function bank() {
+  const el = document.getElementById('content');
+  el.innerHTML = '<div class="spinner">Loading bank account…</div>';
+  const data = await api('/plaid/accounts?scope=platform');
+  renderBankPage(el, data, 'platform');
+}
+
+function renderBankPage(el, data, scope) {
+  const connectedBadge = data?.connected
+    ? `<span style="background:#e8f5e9;color:#2e7d32;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700;">● Connected</span>`
+    : `<span style="background:#fdecea;color:#c62828;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700;">● Not Connected</span>`;
+
+  const accountsHtml = data?.connected && data.accounts?.length ? data.accounts.map(a => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #f0ebe4">
+      <div>
+        <div style="font-weight:700;color:#fff">${a.name}${a.mask ? ` ••••${a.mask}` : ''}</div>
+        <div style="font-size:12px;color:#888;text-transform:capitalize">${a.type} · ${a.subtype}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#fff">$${(a.balances.current ?? 0).toLocaleString('en-US', {minimumFractionDigits:2})}</div>
+        ${a.balances.available != null ? `<div style="font-size:12px;color:#888">$${a.balances.available.toLocaleString('en-US', {minimumFractionDigits:2})} available</div>` : ''}
+      </div>
+    </div>`).join('') : '';
+
+  const actionButtons = data?.connected ? `
+    <button class="btn btn-blue btn-sm" onclick="loadTransactions('${scope}')">📋 View Transactions</button>
+    <button class="btn btn-outline btn-sm" onclick="refreshBank('${scope}')">↺ Refresh</button>
+    <button class="btn btn-red btn-sm" onclick="disconnectBank('${scope}')">Disconnect</button>
+  ` : `
+    <button class="btn btn-purple" onclick="connectBank('${scope}')">🏦 Connect StudioPoint Bank Account</button>
+  `;
+
+  el.innerHTML = `
+    <div class="panel">
+      <div class="panel-header">
+        <h3>${data?.institution || 'StudioPoint LLC — Bank Account'}</h3>
+        ${connectedBadge}
+      </div>
+      ${data?.connected ? `
+        <div style="margin-bottom:20px">${accountsHtml}</div>
+        <p style="font-size:12px;color:#666;margin-bottom:16px">Environment: ${data.environment} · Read-only access · Powered by Plaid</p>
+      ` : `
+        <p style="color:#888;font-size:14px;margin-bottom:20px">Connect the StudioPoint LLC bank account to view real-time balances and reconcile studio subscription payments against actual deposits.</p>
+      `}
+      <div style="display:flex;gap:8px;flex-wrap:wrap">${actionButtons}</div>
+      <div id="bank-result" style="margin-top:16px"></div>
+    </div>
+
+    <div id="transactions-panel"></div>
+
+    <div class="panel">
+      <div class="panel-header"><h3>Setup Instructions</h3></div>
+      <ol style="font-size:14px;color:#666;line-height:2;padding-left:20px">
+        <li>Go to <strong>dashboard.plaid.com</strong> and create a free account.</li>
+        <li>Create a new app → copy your <strong>Client ID</strong> and <strong>Secret</strong> (Sandbox first).</li>
+        <li>In <strong>Railway</strong>, add these environment variables:<br>
+          <code style="background:#f5f5f5;padding:4px 10px;border-radius:4px;font-size:13px;display:inline-block;margin-top:6px;line-height:2">
+            PLAID_CLIENT_ID=your_client_id<br>
+            PLAID_SECRET=your_secret<br>
+            PLAID_ENV=sandbox
+          </code>
+        </li>
+        <li>Click <strong>Connect StudioPoint Bank Account</strong> and search for Chase (or your bank).</li>
+        <li>When live, change <code>PLAID_ENV</code> to <code>development</code> or <code>production</code> in Railway.</li>
+      </ol>
+    </div>
+  `;
+}
+
+async function connectBank(scope) {
+  const res = await api('/plaid/link-token', { method: 'POST', body: JSON.stringify({ scope }) });
+  if (!res?.link_token) return alert(res?.error || 'Failed to start bank connection. Check Plaid credentials in Railway.');
+  const handler = Plaid.create({
+    token: res.link_token,
+    onSuccess: async (public_token, metadata) => {
+      const institution_name = metadata.institution?.name || null;
+      const r = await api('/plaid/exchange', { method: 'POST', body: JSON.stringify({ public_token, institution_name, scope }) });
+      if (r?.connected) bank();
+      else alert(r?.error || 'Failed to connect bank account.');
+    },
+    onExit: () => {},
+  });
+  handler.open();
+}
+
+async function refreshBank(scope) {
+  const el = document.getElementById('content');
+  el.innerHTML = '<div class="spinner">Refreshing…</div>';
+  const data = await api(`/plaid/accounts?scope=${scope}`);
+  renderBankPage(el, data, scope);
+}
+
+async function disconnectBank(scope) {
+  if (!confirm('Disconnect bank account? You can reconnect at any time.')) return;
+  const r = await api('/plaid/disconnect', { method: 'POST', body: JSON.stringify({ scope }) });
+  if (r?.disconnected) bank();
+  else alert(r?.error || 'Failed to disconnect.');
+}
+
+async function loadTransactions(scope) {
+  document.getElementById('transactions-panel').innerHTML = '<div class="spinner">Loading transactions…</div>';
+  const data = await api(`/plaid/transactions?scope=${scope}&days=30`);
+  if (!data?.transactions) {
+    document.getElementById('transactions-panel').innerHTML = '';
+    return;
+  }
+  const rows = data.transactions.map(t => `
+    <tr>
+      <td>${t.date}</td>
+      <td>${t.name}</td>
+      <td>${t.category || '—'}</td>
+      <td style="text-align:right;font-weight:700;color:${t.amount > 0 ? '#E53935' : '#4CAF50'}">
+        ${t.amount > 0 ? '-' : '+'}$${Math.abs(t.amount).toFixed(2)}
+      </td>
+      <td>${t.pending ? '<span style="color:#F57C00;font-size:12px">Pending</span>' : '<span style="color:#4CAF50;font-size:12px">Posted</span>'}</td>
+    </tr>`).join('');
+  document.getElementById('transactions-panel').innerHTML = `
+    <div class="panel">
+      <div class="panel-header"><h3>Last 30 Days — Transactions</h3></div>
+      <table class="tbl">
+        <thead><tr><th>Date</th><th>Description</th><th>Category</th><th style="text-align:right">Amount</th><th>Status</th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:20px">No transactions found</td></tr>'}</tbody>
+      </table>
+    </div>`;
 }
 
 // ─────────────────────────────────────────
