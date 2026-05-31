@@ -221,6 +221,11 @@
       padding: 24px 40px; font-size: 13px;
     }
 
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
     /* RESPONSIVE */
     @media (max-width: 640px) {
       nav { padding: 14px 20px; }
@@ -355,7 +360,7 @@
       <tbody>
         <tr>
           <td>Monthly fee</td>
-          <td class="highlight">$500 one-time + $250/mo</td>
+          <td class="highlight">$250/mo<br/><span style="font-size:12px;color:#888;">One-time setup fee applies</span></td>
           <td>$139–$599</td>
           <td>$110–$150</td>
           <td>$96–$396</td>
@@ -410,8 +415,8 @@
           <td>❌</td>
         </tr>
         <tr>
-          <td>One-time onboarding fee (no monthly markup)</td>
-          <td class="highlight">✅ $500</td>
+          <td>One-time setup fee (covers full onboarding)</td>
+          <td class="highlight">✅ Yes — then $250/mo flat</td>
           <td>❌</td>
           <td>❌</td>
           <td>❌</td>
@@ -452,8 +457,9 @@
       <div class="plan-card">
         <div class="plan-badge">3-MONTH ONBOARDING</div>
         <div class="plan-name">Onboarding Plan</div>
-        <div class="plan-price">$500<span> one-time</span></div>
-        <div class="plan-desc">We build and test your platform while you continue using your current provider — zero disruption to your revenue or class reservations. Onboarding runs up to 3 months, but you can go live sooner if you hit all 6 milestones early. No clock. Just results.</div>
+        <div class="plan-price">$250<span>/month</span></div>
+        <div class="plan-desc">A one-time setup fee applies — covering everything needed to get your studio fully built, configured, and live. We handle it all while you stay on your current provider, zero disruption. Up to 3 months, or sooner if you hit all 6 milestones.<br/><br/>See everything included below.</div>
+        <a href="#onboarding-details" style="display:block;text-align:center;margin-top:16px;font-size:28px;color:#8B7355;text-decoration:none;animation:bounce 1.5s infinite;">↓</a>
         <a href="#demo" class="plan-cta">Book a Free Demo</a>
       </div>
       <div class="plan-card featured">
@@ -466,7 +472,7 @@
     </div>
 
     <!-- ONBOARDING VALUE BREAKDOWN -->
-    <div style="margin-top:56px;border:1px solid #333;border-radius:20px;padding:40px;">
+    <div id="onboarding-details" style="margin-top:56px;border:1px solid #333;border-radius:20px;padding:40px;">
       <div class="section-label" style="color:#8B7355;margin-bottom:12px;">What's Included in Your Onboarding</div>
       <h3 style="color:#fff;font-size:22px;font-weight:700;margin-bottom:8px;">A Managed Transition — Not a DIY Setup</h3>
       <p style="color:#888;font-size:15px;line-height:1.7;margin-bottom:32px;">Switching studio management platforms is one of the most disruptive decisions an owner can make. That's why we build and test your StudioPoint platform while you stay on your current provider — your revenue keeps flowing, your class reservations stay intact, and your members feel nothing. When your platform is ready and you say so, you switch. Your $500 one-time onboarding fee isn't just software setup — it's a dedicated partner through every stage of the transition, for up to 3 months (or sooner if you hit all 6 milestones).</p>
