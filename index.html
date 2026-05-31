@@ -355,19 +355,19 @@
       <tbody>
         <tr>
           <td>Monthly fee</td>
-          <td class="highlight">$400 → $200 flat</td>
+          <td class="highlight">$500 one-time + $250/mo</td>
           <td>$139–$599</td>
           <td>$110–$150</td>
           <td>$96–$396</td>
           <td>Custom quote</td>
         </tr>
         <tr>
-          <td>Transaction fees</td>
-          <td class="highlight">None ✅</td>
-          <td>Yes ❌</td>
-          <td>Yes ❌</td>
-          <td>Yes ❌</td>
-          <td>3% + Stripe ❌</td>
+          <td>Payment processing fees</td>
+          <td class="highlight">2.9% + $0.30 ✅<br/><span style="font-size:12px;color:#888;">Your own Stripe account. Paid direct to Stripe. Zero markup from us.</span></td>
+          <td>2.99–3.60% + $0.30 ❌<br/><span style="font-size:12px;color:#888;">Forced onto Mindbody Payments (Stripe backend, marked up). You don't own the account.</span></td>
+          <td>2.5–2.9% ❌<br/><span style="font-size:12px;color:#888;">Bundled Stripe — Glofox controls the account, not you.</span></td>
+          <td>2.9%+ (Celero/Stripe) + monthly Pike13 fee ❌<br/><span style="font-size:12px;color:#888;">Pike13 charges an extra monthly fee if you use Stripe.</span></td>
+          <td>2.9% + $0.30 (Stripe) + 3% (Arketa) ❌<br/><span style="font-size:12px;color:#888;">~5.9% total per transaction. Both Arketa AND Stripe charge you.</span></td>
         </tr>
         <tr>
           <td>Per-member fees</td>
@@ -388,7 +388,7 @@
         <tr>
           <td>New member commission fee</td>
           <td class="highlight">None ✅</td>
-          <td>Yes ❌</td>
+          <td>20% of first purchase ❌<br/><span style="font-size:12px;color:#888;">Capped at $30 per new member</span></td>
           <td>N/A</td>
           <td>N/A</td>
           <td>N/A</td>
@@ -410,12 +410,28 @@
           <td>❌</td>
         </tr>
         <tr>
-          <td>Fee cut in half after onboarding</td>
-          <td class="highlight">✅</td>
+          <td>One-time onboarding fee (no monthly markup)</td>
+          <td class="highlight">✅ $500</td>
           <td>❌</td>
           <td>❌</td>
           <td>❌</td>
           <td>❌</td>
+        </tr>
+        <tr>
+          <td style="color:#C4A882;font-weight:600;">Est. monthly platform cost<br/><span style="font-size:12px;font-weight:400;color:#888;">100 members × $150/mo = $15,000 revenue</span></td>
+          <td class="highlight" style="color:#4CAF50;font-weight:700;">$250/mo ✅<br/><span style="font-size:12px;font-weight:400;color:#aaa;">Flat fee. That's it.</span></td>
+          <td style="color:#ff6b6b;">~$844–$1,100+/mo<br/><span style="font-size:12px;color:#888;">$349 plan + ~$495 marked-up processing + new member commissions</span></td>
+          <td style="color:#ff6b6b;">~$555–$630+/mo<br/><span style="font-size:12px;color:#888;">$150 plan + ~$405 processing</span></td>
+          <td style="color:#ff6b6b;">~$631–$1,000+/mo<br/><span style="font-size:12px;color:#888;">$196–$396 plan + processor fees + Pike13 monthly fee</span></td>
+          <td style="color:#ff6b6b;">~$900+/mo<br/><span style="font-size:12px;color:#888;">Platform + ~$885 in fees (5.9% × $15k)</span></td>
+        </tr>
+        <tr>
+          <td style="color:#C4A882;font-weight:600;">Est. monthly platform cost<br/><span style="font-size:12px;font-weight:400;color:#888;">100 members × $200/mo = $20,000 revenue</span></td>
+          <td class="highlight" style="color:#4CAF50;font-weight:700;">$250/mo ✅<br/><span style="font-size:12px;font-weight:400;color:#aaa;">Same flat fee. Your growth costs you nothing extra.</span></td>
+          <td style="color:#ff6b6b;">~$1,009–$1,270+/mo<br/><span style="font-size:12px;color:#888;">$349 plan + ~$660 marked-up processing + new member commissions</span></td>
+          <td style="color:#ff6b6b;">~$690–$730+/mo<br/><span style="font-size:12px;color:#888;">$150 plan + ~$540 processing</span></td>
+          <td style="color:#ff6b6b;">~$776–$1,180+/mo<br/><span style="font-size:12px;color:#888;">$196–$396 plan + processor fees + Pike13 monthly fee</span></td>
+          <td style="color:#ff6b6b;">~$1,230+/mo<br/><span style="font-size:12px;color:#888;">Platform + ~$1,180 in fees (5.9% × $20k)</span></td>
         </tr>
         <tr>
           <td>Custom branded app</td>
@@ -427,20 +443,24 @@
         </tr>
       </tbody>
     </table>
+    <p style="font-size:13px;color:#555;margin-top:-36px;margin-bottom:56px;line-height:1.7;">
+      * Estimated costs based on publicly available pricing as of 2026. Competitor processing estimates assume 100 transactions/month at the stated revenue level. Actual costs may vary by plan tier and volume.<br/>
+      ** StudioPoint's monthly cost is $250 flat — period. You connect your own Stripe account and pay Stripe directly at their standard rate. We charge zero markup on processing. Every other provider on this list either marks up Stripe's rate, controls your Stripe account, or charges their own fee on top of it. The more revenue you generate, the more they charge. With StudioPoint, your growth costs you nothing extra.
+    </p>
 
     <div class="plans">
       <div class="plan-card">
-        <div class="plan-badge">FIRST 6 MONTHS</div>
+        <div class="plan-badge">3-MONTH ONBOARDING</div>
         <div class="plan-name">Onboarding Plan</div>
-        <div class="plan-price">$400<span>/month</span></div>
-        <div class="plan-desc">We build and test your platform while you continue using your current provider — zero disruption to your revenue or class reservations. When 6 key milestones are complete and you sign off, your fee drops permanently. No calendar. No clock. Just results.</div>
+        <div class="plan-price">$500<span> one-time</span></div>
+        <div class="plan-desc">We build and test your platform while you continue using your current provider — zero disruption to your revenue or class reservations. Onboarding runs up to 3 months, but you can go live sooner if you hit all 6 milestones early. No clock. Just results.</div>
         <a href="#demo" class="plan-cta">Book a Free Demo</a>
       </div>
       <div class="plan-card featured">
         <div class="plan-badge">YOUR REWARD</div>
         <div class="plan-name">Standard Plan</div>
-        <div class="plan-price">$200<span>/month</span></div>
-        <div class="plan-desc">After your onboarding milestones are complete and you've signed off, your platform is sound and efficient — so your monthly cost is cut in half immediately. It's our way of thanking you for trusting and collaborating with us. Unlimited members, unlimited classes, all features. Forever.</div>
+        <div class="plan-price">$250<span>/month</span></div>
+        <div class="plan-desc">After your onboarding milestones are complete and you've signed off, you move to one simple flat monthly fee. Unlimited members, unlimited classes, all features — no hidden charges, no per-member costs, no surprises. Forever.</div>
         <a href="#demo" class="plan-cta">Book a Free Demo</a>
       </div>
     </div>
@@ -449,7 +469,7 @@
     <div style="margin-top:56px;border:1px solid #333;border-radius:20px;padding:40px;">
       <div class="section-label" style="color:#8B7355;margin-bottom:12px;">What's Included in Your Onboarding</div>
       <h3 style="color:#fff;font-size:22px;font-weight:700;margin-bottom:8px;">A Managed Transition — Not a DIY Setup</h3>
-      <p style="color:#888;font-size:15px;line-height:1.7;margin-bottom:32px;">Switching studio management platforms is one of the most disruptive decisions an owner can make. That's why we build and test your StudioPoint platform while you stay on your current provider — your revenue keeps flowing, your class reservations stay intact, and your members feel nothing. When your platform is ready and you say so, you switch. Your $400/month isn't just software — it's a dedicated partner through every stage of the transition.</p>
+      <p style="color:#888;font-size:15px;line-height:1.7;margin-bottom:32px;">Switching studio management platforms is one of the most disruptive decisions an owner can make. That's why we build and test your StudioPoint platform while you stay on your current provider — your revenue keeps flowing, your class reservations stay intact, and your members feel nothing. When your platform is ready and you say so, you switch. Your $500 one-time onboarding fee isn't just software setup — it's a dedicated partner through every stage of the transition, for up to 3 months (or sooner if you hit all 6 milestones).</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
         <div style="background:#222;border-radius:12px;padding:20px;">
           <div style="font-size:24px;margin-bottom:10px;">🎨</div>
@@ -479,14 +499,14 @@
         <div style="background:#222;border-radius:12px;padding:20px;">
           <div style="font-size:24px;margin-bottom:10px;">✂️</div>
           <div style="color:#fff;font-weight:700;margin-bottom:6px;">Your Fee Cuts in Half</div>
-          <div style="color:#888;font-size:14px;line-height:1.6;">When all 6 milestones are complete and you've signed off, your monthly cost drops to $200 — immediately. We don't hold you to a calendar.</div>
+          <div style="color:#888;font-size:14px;line-height:1.6;">When all 6 milestones are complete and you've signed off, you move straight to $250/month — immediately. We don't hold you to a calendar.</div>
         </div>
       </div>
 
       <!-- MILESTONES -->
       <div style="margin-top:40px;border-top:1px solid #333;padding-top:36px;">
         <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:6px;">The 6 Milestones That Unlock Your Reduced Rate</div>
-        <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:24px;">When every milestone below is complete and you sign the completion acknowledgment, your fee drops the very next billing cycle. Finish in 3 months — your fee drops in 3 months. We don't hold you to a calendar.</p>
+        <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:24px;">When every milestone below is complete and you sign the completion acknowledgment, you go live and move to $250/month — as early as the next billing cycle. Onboarding is up to 3 months, but finish early and you go live early. We don't hold you to a calendar.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
           <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
             <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">01</div>
@@ -582,8 +602,8 @@
       </div>
       <div class="step">
         <div class="step-number">4</div>
-        <div class="step-title">Milestones Complete. Fee Drops.</div>
-        <div class="step-desc">We build everything while you stay on your current provider — zero disruption. Hit all 6 milestones, sign off, and your fee permanently cuts in half. No calendar. Your timeline.</div>
+        <div class="step-title">Milestones Complete. You Go Live.</div>
+        <div class="step-desc">We build everything while you stay on your current provider — zero disruption. Hit all 6 milestones within 3 months, sign off, and you move to $250/month flat. No hidden fees. Your timeline.</div>
       </div>
     </div>
   </div>
