@@ -143,22 +143,24 @@
     .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .plan-card {
       border-radius: 16px; padding: 32px;
-      border: 1px solid #333;
+      background: #F9F6F2;
+      display: flex; flex-direction: column;
     }
-    .plan-card.featured { border-color: #8B7355; background: rgba(139,115,85,0.08); }
+    .plan-card.featured { border: 1px solid #8B7355; }
     .plan-badge {
       display: inline-block; background: #8B7355; color: #fff;
       border-radius: 20px; padding: 4px 12px; font-size: 11px;
       font-weight: 700; letter-spacing: 0.5px; margin-bottom: 16px;
     }
-    .plan-name { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .plan-name { font-size: 20px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
     .plan-price { font-size: 42px; font-weight: 800; color: #8B7355; margin-bottom: 4px; }
-    .plan-price span { font-size: 16px; color: #aaa; font-weight: 400; }
-    .plan-desc { font-size: 14px; color: #888; line-height: 1.6; margin-bottom: 24px; }
+    .plan-price span { font-size: 16px; color: #666; font-weight: 400; }
+    .plan-desc { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 24px; }
     .plan-cta {
       display: block; text-align: center; background: #8B7355; color: #fff;
       border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600;
       text-decoration: none; transition: background 0.2s;
+      margin-top: auto;
     }
     .plan-cta:hover { background: #7a6248; }
 
@@ -410,8 +412,13 @@
       </tbody>
     </table>
     <p style="color:#888;font-size:15px;font-weight:600;margin:-32px 0 12px;">Your fee never grows with your studio. At 100 members or 200, StudioPoint is $250. Platforms that take a percentage of revenue charge you more for succeeding.</p>
-    <p style="color:#555;font-size:12px;line-height:1.7;margin-bottom:48px;">All platforms' studios also pay standard card processing (Stripe 2.9% + $0.30).</p>
+    <p style="color:#555;font-size:12px;line-height:1.7;">All platforms' studios also pay standard card processing (Stripe 2.9% + $0.30).</p>
+  </div>
+</section>
 
+<!-- PLAN CARDS — light theme, mirrors the Features section -->
+<section>
+  <div class="section-inner">
     <div class="plans">
       <div class="plan-card">
         <div class="plan-badge">ONE-TIME ONBOARDING</div>
@@ -428,9 +435,13 @@
         <a href="#demo" class="plan-cta">Book a Free Demo</a>
       </div>
     </div>
+  </div>
+</section>
 
+<section class="pricing">
+  <div class="section-inner">
     <!-- ONBOARDING VALUE BREAKDOWN -->
-    <div style="margin-top:56px;border:1px solid #333;border-radius:20px;padding:40px;">
+    <div style="border:1px solid #333;border-radius:20px;padding:40px;">
       <div class="section-label" style="color:#8B7355;margin-bottom:12px;">What's Included in Your Onboarding</div>
       <h3 style="color:#fff;font-size:22px;font-weight:700;margin-bottom:8px;">A Managed Transition — Not a DIY Setup</h3>
       <p style="color:#888;font-size:15px;line-height:1.7;margin-bottom:32px;">Switching studio management platforms is one of the most disruptive decisions an owner can make. That's why we build and test your StudioPoint platform while you stay on your current provider — your revenue keeps flowing, your class reservations stay intact, and your members feel nothing. When your platform is ready and you say so, you switch. Your one-time $400 onboarding fee isn't software — it's a dedicated partner through every stage of the transition, and we don't collect the second half of it until you sign off.</p>
@@ -467,55 +478,6 @@
         </div>
       </div>
 
-      <!-- MILESTONES -->
-      <div style="margin-top:40px;border-top:1px solid #333;padding-top:36px;">
-        <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:6px;">The 6 Milestones That Unlock Your Reduced Rate</div>
-        <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:24px;">When every milestone below is complete and you sign the completion acknowledgment, your fee drops the very next billing cycle. Finish in 3 months — your fee drops in 3 months. We don't hold you to a calendar.</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
-          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
-            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">01</div>
-            <div>
-              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Classes Configured</div>
-              <div style="color:#888;font-size:13px;line-height:1.5;">Your full schedule is live and bookable in the platform.</div>
-            </div>
-          </div>
-          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
-            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">02</div>
-            <div>
-              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Members Migrated</div>
-              <div style="color:#888;font-size:13px;line-height:1.5;">All member data and membership plans transferred and verified.</div>
-            </div>
-          </div>
-          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
-            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">03</div>
-            <div>
-              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Stripe Connected</div>
-              <div style="color:#888;font-size:13px;line-height:1.5;">Payments are live and revenue is flowing directly to your account.</div>
-            </div>
-          </div>
-          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
-            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">04</div>
-            <div>
-              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Staff Trained</div>
-              <div style="color:#888;font-size:13px;line-height:1.5;">Your team can manage classes, check-ins, and memberships independently.</div>
-            </div>
-          </div>
-          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
-            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">05</div>
-            <div>
-              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">First Billing Cycle Complete</div>
-              <div style="color:#888;font-size:13px;line-height:1.5;">At least one full billing cycle has run without issues.</div>
-            </div>
-          </div>
-          <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
-            <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">06</div>
-            <div>
-              <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Owner Sign-Off</div>
-              <div style="color:#888;font-size:13px;line-height:1.5;">You've reviewed your reports and signed the completion acknowledgment. Fee drops immediately.</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -551,6 +513,61 @@
         <div class="step-desc">We build everything while you stay on your current provider — zero disruption. Hit all 6 milestones, sign off, and you go live — your $250/month starts and we collect the final $200 of onboarding. No calendar. Your timeline.</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- MILESTONES -->
+<section class="pricing">
+  <div class="section-inner">
+  <!-- MILESTONES -->
+  <div style="border:1px solid #333;border-radius:20px;padding:40px;">
+    <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:6px;">The 6 Milestones That Take You Live</div>
+    <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:24px;">When every milestone below is complete and you sign the completion acknowledgment, you go live — the final $200 of your onboarding fee is collected and your $250/month begins. Finish in 3 weeks — you’re live in 3 weeks. We don't hold you to a calendar.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
+      <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+        <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">01</div>
+        <div>
+          <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Classes Configured</div>
+          <div style="color:#888;font-size:13px;line-height:1.5;">Your full schedule is live and bookable in the platform.</div>
+        </div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+        <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">02</div>
+        <div>
+          <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Members Migrated</div>
+          <div style="color:#888;font-size:13px;line-height:1.5;">All member data and membership plans transferred and verified.</div>
+        </div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+        <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">03</div>
+        <div>
+          <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Stripe Connected</div>
+          <div style="color:#888;font-size:13px;line-height:1.5;">Payments are live and revenue is flowing directly to your account.</div>
+        </div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+        <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">04</div>
+        <div>
+          <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Staff Trained</div>
+          <div style="color:#888;font-size:13px;line-height:1.5;">Your team can manage classes, check-ins, and memberships independently.</div>
+        </div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+        <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">05</div>
+        <div>
+          <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">First Billing Cycle Complete</div>
+          <div style="color:#888;font-size:13px;line-height:1.5;">At least one full billing cycle has run without issues.</div>
+        </div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
+        <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">06</div>
+        <div>
+          <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Owner Sign-Off</div>
+          <div style="color:#888;font-size:13px;line-height:1.5;">You've reviewed your reports and signed the completion acknowledgment. You’re live.</div>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 </section>
 
