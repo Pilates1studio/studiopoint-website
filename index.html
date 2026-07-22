@@ -221,11 +221,6 @@
       padding: 24px 40px; font-size: 13px;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(8px); }
-    }
-
     /* RESPONSIVE */
     @media (max-width: 640px) {
       nav { padding: 14px 20px; }
@@ -352,124 +347,94 @@
           <th></th>
           <th class="highlight">StudioPoint</th>
           <th>Mindbody</th>
-          <th>Glofox</th>
-          <th>Pike13</th>
-          <th>Arketa</th>
           <th>Walla</th>
+          <th>Arketa</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Monthly fee</td>
-          <td class="highlight">$250/mo<br/><span style="font-size:12px;color:#888;">Flat — onboarding included</span></td>
-          <td>$139–$599</td>
-          <td>$110–$150</td>
-          <td>$96–$396</td>
-          <td>Custom quote</td>
-          <td>$220–$679<br/><span style="font-size:12px;color:#888;">per location, by tier</span></td>
+          <td>Monthly rate (with branded app)</td>
+          <td class="highlight">$250 flat ✅</td>
+          <td>$399 (mid tier)*</td>
+          <td>$469 (Core + app)</td>
+          <td>Quote-based — app on top tier only</td>
         </tr>
         <tr>
-          <td>Payment processing fees</td>
-          <td class="highlight">2.9% + $0.30 ✅<br/><span style="font-size:12px;color:#888;">Stripe only;<br/>no additional fees.</span></td>
-          <td>2.99–3.60% + fees ❌<br/><span style="font-size:12px;color:#888;">Stripe +<br/>Mindbody fees.</span></td>
-          <td>2.5–2.9% + fees ❌<br/><span style="font-size:12px;color:#888;">Stripe +<br/>Glofox fees.</span></td>
-          <td>2.9% +<br/>fees ❌<br/><span style="font-size:12px;color:#888;">Stripe +<br/>Pike13 fees.</span></td>
-          <td>2.9% + 3% + fees ❌<br/><span style="font-size:12px;color:#888;">Stripe +<br/>Arketa fees.</span></td>
-          <td>2.9% + $0.30 ✅<br/><span style="font-size:12px;color:#888;">Stripe;<br/>no markup.</span></td>
+          <td>Branded member app</td>
+          <td class="highlight">Included ✅</td>
+          <td>Included at rate shown</td>
+          <td>Paid add-on (included at rate shown)</td>
+          <td>Top tier only</td>
         </tr>
         <tr>
-          <td>Per-member fees</td>
+          <td>Platform fee on your revenue</td>
+          <td class="highlight">None — 0% ✅</td>
+          <td>~2–3%*</td>
+          <td>None</td>
+          <td>3%</td>
+        </tr>
+        <tr>
+          <td>Commission on new members from their marketplace app</td>
           <td class="highlight">None ✅</td>
-          <td>Yes ❌</td>
-          <td>Yes ❌</td>
-          <td>Yes ❌</td>
-          <td>Custom ❌</td>
-          <td>None ✅</td>
+          <td>20%*</td>
+          <td>No marketplace</td>
+          <td>No marketplace</td>
+        </tr>
+        <tr style="font-weight:700;">
+          <td style="color:#fff;">Monthly cost — 100 members</td>
+          <td class="highlight" style="font-size:17px;">$250 ✅</td>
+          <td style="color:#fff;">~$774</td>
+          <td style="color:#fff;">$469</td>
+          <td style="color:#fff;">$450 in fees + subscription</td>
+        </tr>
+        <tr style="font-weight:700;">
+          <td style="color:#fff;">Monthly cost — 200 members</td>
+          <td class="highlight" style="font-size:17px;">$250 ✅</td>
+          <td style="color:#fff;">~$1,149</td>
+          <td style="color:#fff;">$469</td>
+          <td style="color:#fff;">$900 in fees + subscription</td>
         </tr>
         <tr>
-          <td>SMS charges</td>
-          <td class="highlight">None ✅</td>
-          <td>Yes ❌</td>
-          <td>Yes ❌</td>
-          <td>Yes ❌</td>
-          <td>Limited ❌</td>
-          <td>$100/mo add-on ❌</td>
+          <td>Contract</td>
+          <td class="highlight">Month-to-month ✅</td>
+          <td>90-day min, auto-renew</td>
+          <td>Month-to-month</td>
+          <td>Month-to-month</td>
         </tr>
         <tr>
-          <td>New member commission fee</td>
-          <td class="highlight">None ✅</td>
-          <td>$30 cap ❌</td>
-          <td>N/A</td>
-          <td>N/A</td>
-          <td>N/A</td>
-          <td>N/A</td>
+          <td>Data export on exit</td>
+          <td class="highlight">Free, one click ✅</td>
+          <td>Paid service for full export</td>
+          <td>Not published</td>
+          <td>Not published</td>
         </tr>
-        <tr>
-          <td>Setup fee</td>
-          <td class="highlight">None ✅</td>
-          <td>Yes ❌</td>
-          <td>Yes ❌</td>
-          <td>Yes ❌</td>
-          <td>Not listed</td>
-          <td>None ✅<br/><span style="font-size:12px;color:#888;">free migration</span></td>
-        </tr>
-        <tr>
-          <td>Dedicated onboarding support</td>
-          <td class="highlight">Milestone-based ✅</td>
-          <td>❌</td>
-          <td>❌</td>
-          <td>❌</td>
-          <td>❌</td>
-          <td>Free migration ✅</td>
-        </tr>
-        <tr>
-          <td style="color:#C4A882;font-weight:600;">Est. monthly platform cost<br/><span style="font-size:12px;font-weight:400;color:#888;">100 members · $150/mo plan · $15K/mo revenue</span></td>
-          <td class="highlight" style="color:#4CAF50;font-weight:700;">$250/mo ✅<br/><span style="font-size:12px;font-weight:400;color:#aaa;">Flat fee. That's it.</span></td>
-          <td style="color:#ff6b6b;">~$844–$1,100+/mo</td>
-          <td style="color:#ff6b6b;">~$555–$630+/mo</td>
-          <td style="color:#ff6b6b;">~$631–$1,000+/mo</td>
-          <td style="color:#ff6b6b;">~$900+/mo</td>
-          <td style="color:#ff6b6b;">~$470–540/mo<br/><span style="font-size:12px;font-weight:400;color:#888;">Core + branded app</span></td>
-        </tr>
-        <tr>
-          <td style="color:#C4A882;font-weight:600;">Est. monthly platform cost<br/><span style="font-size:12px;font-weight:400;color:#888;">100 members · $200/mo plan · $20K/mo revenue</span></td>
-          <td class="highlight" style="color:#4CAF50;font-weight:700;">$250/mo ✅<br/><span style="font-size:12px;font-weight:400;color:#aaa;">Same flat fee. Your success shouldn't cost you more!</span></td>
-          <td style="color:#ff6b6b;">~$1,009–$1,270+/mo</td>
-          <td style="color:#ff6b6b;">~$690–$730+/mo</td>
-          <td style="color:#ff6b6b;">~$776–$1,180+/mo</td>
-          <td style="color:#ff6b6b;">~$1,230+/mo</td>
-          <td style="color:#ff6b6b;">~$470–540/mo<br/><span style="font-size:12px;font-weight:400;color:#888;">flat by tier (doesn't scale)</span></td>
-        </tr>
-
       </tbody>
     </table>
-    <p style="font-size:13px;color:#555;margin-top:-36px;margin-bottom:56px;line-height:1.7;">
-      * Estimated costs based on publicly available pricing as of 2026. Competitor processing estimates assume 100 transactions/month at the stated revenue level. Actual costs may vary by plan tier and volume.<br/>
-      ** StudioPoint's monthly cost is $250 flat — period, with your branded app included. You connect your own Stripe account and pay Stripe directly at their standard rate. Most providers here mark up Stripe, control your Stripe account, or add per-member and SMS fees — so the more you grow, the more they charge. A few (like Walla) keep processing clean, but cost far more per month, bill per location, and gate your branded app behind paid add-ons or a higher tier. With StudioPoint, your growth costs you nothing extra — and the app is included.
-    </p>
+    <p style="color:#888;font-size:15px;font-weight:600;margin:-32px 0 12px;">Your fee never grows with your studio. At 100 members or 200, StudioPoint is $250. Platforms that take a percentage of revenue charge you more for succeeding.</p>
+    <p style="color:#555;font-size:12px;line-height:1.7;margin-bottom:48px;">Member-count costs assume memberships at $150/mo ($15,000 and $30,000 of monthly revenue). *Mindbody: mid-tier rate with branded app included, ~2–3% processing markup (midpoint used), and 20% marketplace commission — as quoted to our own studio when we priced Mindbody before building StudioPoint (2026); their public page now lists quote-based pricing from $79/mo. Walla: hellowalla.com published pricing, July 2026 (Core $320 + branded app $149). Arketa: arketa.com, July 2026 — studio tiers quote-based, 3% platform fee on published plans. All platforms' studios also pay standard card processing (Stripe 2.9% + $0.30).</p>
 
     <div class="plans">
       <div class="plan-card">
-        <div class="plan-badge">3-MONTH ONBOARDING</div>
-        <div class="plan-name">3-month Onboarding</div>
-        <div class="plan-price">$250<span>/month</span></div>
-        <div class="plan-desc">Your white-glove onboarding is included — no setup fee. We get your studio fully built, customized to your needs, and live. Up to 3 months, or sooner if you hit all 6 milestones. See details below ↓</div>
+        <div class="plan-badge">ONE-TIME ONBOARDING</div>
+        <div class="plan-name">White-Glove Onboarding</div>
+        <div class="plan-price">$400<span> one-time</span></div>
+        <div class="plan-desc">$200 down to start — and we don't collect the remaining $200 until you sign off that all 6 onboarding milestones are complete. We build and test your platform while you continue using your current provider — zero disruption to your revenue or class reservations. Milestone-driven, not calendar-driven; typically done within the first month.</div>
         <a href="#demo" class="plan-cta">Book a Free Demo</a>
       </div>
       <div class="plan-card featured">
-        <div class="plan-badge">FULLY LIVE</div>
-        <div class="plan-name">After Onboarding</div>
+        <div class="plan-badge">FROM GO-LIVE</div>
+        <div class="plan-name">Everything Included</div>
         <div class="plan-price">$250<span>/month</span></div>
-        <div class="plan-desc">After your onboarding milestones are complete and you've signed off, your app is tailored and efficient. Unlimited members, unlimited classes, all features — no hidden charges and no per-member costs.</div>
+        <div class="plan-desc">You don't pay a monthly fee until you're live — and you're not live until you've signed off on every milestone. From go-live: the full platform, your branded member app, unlimited members, unlimited classes, all features, support included. Flat. Forever.</div>
         <a href="#demo" class="plan-cta">Book a Free Demo</a>
       </div>
     </div>
 
     <!-- ONBOARDING VALUE BREAKDOWN -->
-    <div id="onboarding-details" style="margin-top:56px;border:1px solid #333;border-radius:20px;padding:40px;">
+    <div style="margin-top:56px;border:1px solid #333;border-radius:20px;padding:40px;">
       <div class="section-label" style="color:#8B7355;margin-bottom:12px;">What's Included in Your Onboarding</div>
       <h3 style="color:#fff;font-size:22px;font-weight:700;margin-bottom:8px;">A Managed Transition — Not a DIY Setup</h3>
-      <p style="color:#888;font-size:15px;line-height:1.7;margin-bottom:32px;">Switching studio management platforms is one of the most disruptive decisions an owner can make. That's why we build and test your StudioPoint platform while you stay on your current provider — your revenue keeps flowing, your class reservations stay intact, and your members feel nothing. When your platform is ready and you say so, you switch. Your onboarding isn't just software setup — it's a dedicated partner through every stage of the transition, for up to 3 months (or sooner if you hit all 6 milestones) — all included in your flat $250/month.</p>
+      <p style="color:#888;font-size:15px;line-height:1.7;margin-bottom:32px;">Switching studio management platforms is one of the most disruptive decisions an owner can make. That's why we build and test your StudioPoint platform while you stay on your current provider — your revenue keeps flowing, your class reservations stay intact, and your members feel nothing. When your platform is ready and you say so, you switch. Your one-time $400 onboarding fee isn't software — it's a dedicated partner through every stage of the transition, and we don't collect the second half of it until you sign off.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
         <div style="background:#222;border-radius:12px;padding:20px;">
           <div style="font-size:24px;margin-bottom:10px;">🎨</div>
@@ -497,16 +462,16 @@
           <div style="color:#888;font-size:14px;line-height:1.6;">A direct line to your onboarding partner — not a ticket queue or a chatbot.</div>
         </div>
         <div style="background:#222;border-radius:12px;padding:20px;">
-          <div style="font-size:24px;margin-bottom:10px;">🔒</div>
-          <div style="color:#fff;font-weight:700;margin-bottom:6px;">One Flat Rate — Always</div>
-          <div style="color:#888;font-size:14px;line-height:1.6;">You're at $250/month from day one and you stay there. The 6 milestones simply confirm your platform is fully ready before you rely on it — no rate games, no surprises.</div>
+          <div style="font-size:24px;margin-bottom:10px;">🤝</div>
+          <div style="color:#fff;font-weight:700;margin-bottom:6px;">You Sign Off — Then We Get Paid</div>
+          <div style="color:#888;font-size:14px;line-height:1.6;">The second half of your onboarding fee is only collected when all 6 milestones are complete and you've signed off. And your $250/month doesn't start until you're live. We don't hold you to a calendar.</div>
         </div>
       </div>
 
       <!-- MILESTONES -->
       <div style="margin-top:40px;border-top:1px solid #333;padding-top:36px;">
-        <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:6px;">The 6 Milestones That Complete Your Onboarding</div>
-        <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:24px;">When every milestone below is complete and you sign the completion acknowledgment, you go fully live — at the same flat $250/month you've paid from day one. Onboarding is up to 3 months, but finish early and you go live early. We don't hold you to a calendar.</p>
+        <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:6px;">The 6 Milestones That Unlock Your Reduced Rate</div>
+        <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:24px;">When every milestone below is complete and you sign the completion acknowledgment, your fee drops the very next billing cycle. Finish in 3 months — your fee drops in 3 months. We don't hold you to a calendar.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
           <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:12px;">
             <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">01</div>
@@ -547,7 +512,7 @@
             <div style="color:#8B7355;font-size:18px;font-weight:800;flex-shrink:0;">06</div>
             <div>
               <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;">Owner Sign-Off</div>
-              <div style="color:#888;font-size:13px;line-height:1.5;">You've reviewed your reports and signed the completion acknowledgment. You're fully live — at the same $250/month.</div>
+              <div style="color:#888;font-size:13px;line-height:1.5;">You've reviewed your reports and signed the completion acknowledgment. Fee drops immediately.</div>
             </div>
           </div>
         </div>
@@ -602,8 +567,8 @@
       </div>
       <div class="step">
         <div class="step-number">4</div>
-        <div class="step-title">Milestones Complete. You Go Live.</div>
-        <div class="step-desc">We build everything while you stay on your current provider — zero disruption. Hit all 6 milestones within 3 months, sign off, and you're fully live on your flat $250/month — onboarding included, no hidden fees. Your timeline.</div>
+        <div class="step-title">Milestones Complete. Fee Drops.</div>
+        <div class="step-desc">We build everything while you stay on your current provider — zero disruption. Hit all 6 milestones, sign off, and your fee permanently cuts in half. No calendar. Your timeline.</div>
       </div>
     </div>
   </div>
@@ -673,7 +638,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 StudioPoint LLC. All rights reserved. · <a href="/privacy-policy.html" style="color:#555">Privacy Policy</a></p>
+  <p>© 2026 StudioPoint LLC. All rights reserved. · <a href="https://sites.google.com/view/studiopoint-privacy/home" style="color:#555">Privacy Policy</a></p>
 </footer>
 
 </body>
